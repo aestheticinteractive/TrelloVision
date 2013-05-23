@@ -12,34 +12,27 @@
 	<script src="js/services.js"></script>
 	<script src="js/controllers.js"></script>
 </head>
-<body>
-	<h1>
-		TrelloVision
-	</h1>
+<body ng-controller="Home">
+	<h2>
+		<a href="{{ me.data.url }}">{{ me.data.username }}</a>
+	</h2>
+
 	<p>
-		It begins today.
+		{{ me.data.fullName }}
 	</p>
-	
-	<div ng-controller="Home">
-		<p>
-			Me: {{ me.data }}
-		</p>
-	</div>
 
-	<div id="dialogAuthStart" title="Trello Authorization">
-		<p>
-			The TrelloVision application requires <strong>read-only</strong> access to your Trello 
-			account. Would you like to continue?
-		</p>
-	</div>
-
+	<ul>
+		<li ng-repeat="org in me.data.organizations">
+			<p>
+				{{org.displayName}}
+			</p>
+		</li>
+	</ul>
 
 	<div id="dialogAuthFail" title="Trello Authorization Failure">
 		<p>
 			Sorry, your Trello authorization has failed. Please try again!
 		</p>
 	</div>
-
-
 </body>
 </html>
