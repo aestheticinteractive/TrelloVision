@@ -4,33 +4,31 @@ var app = angular.module('TrelloVision', []);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-app.factory('RandomService', function ($timeout) {
-	var data = [];
-    var data2 = [];
+app.factory('TrelloMeService', function() {
+	var me = [];
 	var svc = {};
-
-	svc.async = function () {
-		$timeout(function () {
-			data.length = 0;
-
-			for (var i = 0; i < 10; i++) {
-				data.push({ val: Math.random() });
-			}
-		}, 1000);
+	
+	var onData = function(data) {
+		me.push('c');
+		me.push(data);
+		me.push('d');
+		alert(me);
 	};
 
-	svc.data = function () {
-		return data;
-	};
-
-	svc.data2 = function () {
-		data2 = []
-
-		for (var i = 0; i < data.length; i++) {
-			data2.push({ val: 10 * data[i] });
-		};
+	svc.loadData = function () {
+		me.push('a');
+		trelloAuth(function() {
+			me.push('b');
+			Trello.get('/members/me', { boards: "open", organizations: "all" }, onData);
+			me.push('e');
+		});
+		me.push('f');
 		
-		return data2;
+		//setInterval(function() { me.push("x"); alert(me); }, 2000);
+	};
+
+	svc.me = function () {
+		return me;
 	};
 
 	return svc;

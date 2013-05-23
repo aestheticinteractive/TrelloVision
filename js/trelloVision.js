@@ -7,7 +7,7 @@ $(init);
 function init() {
 	setupUi();
 	//$("#dialogAuthStart").dialog("open");
-	trelloAuth();
+	//trelloAuth();
 }
 
 /*----------------------------------------------------------------------------------------------------*/
@@ -53,12 +53,15 @@ function setupUi() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-function trelloAuth() {
+function trelloAuth(onSuccess) {
 	var opt = {
 		type: "redirect",
 		name: "TrelloVision",
 		scope: { read: true },
-		success: this.trelloAuthSuccess,
+		success: function() {
+			trelloAuthSuccess();
+			onSuccess();
+		},
 		error: this.trelloAuthError
 	};
 
