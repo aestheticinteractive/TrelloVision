@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="us" ng-app>
+<html lang="us" ng-app="TrelloVision">
 <head>
 	<meta charset="utf-8">
 	<title>TrelloVision</title>
@@ -7,7 +7,10 @@
 	<script src="js/lib/jquery-1.9.1.min.js"></script>
 	<script src="js/lib/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="js/lib/angular-1.0.7.min.js"></script>
+	<script src="https://api.trello.com/1/client.js?key=299356e8538e20d425a72149ee8703bc"></script>
 	<script src="js/trelloVision.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
 </head>
 <body>
 	<h1>
@@ -16,5 +19,28 @@
 	<p>
 		It begins today.
 	</p>
+	
+	<div ng-controller="Home">
+		<p>
+			Data: {{ data }}<br />
+			Data2: {{ data2() }}
+		</p>
+	</div>
+
+	<div id="dialogAuthStart" title="Trello Authorization">
+		<p>
+			The TrelloVision application requires <strong>read-only</strong> access to your Trello 
+			account. Would you like to continue?
+		</p>
+	</div>
+
+
+	<div id="dialogAuthFail" title="Trello Authorization Failure">
+		<p>
+			Sorry, your Trello authorization has failed. Please try again!
+		</p>
+	</div>
+
+
 </body>
 </html>
