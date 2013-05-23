@@ -5,26 +5,16 @@ var app = angular.module('TrelloVision', []);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 app.factory('TrelloMeService', function() {
-	var me = [];
+	var me = { data: null };
 	var svc = {};
-	
-	var onData = function(data) {
-		me.push('c');
-		me.push(data);
-		me.push('d');
-		alert(me);
-	};
 
-	svc.loadData = function () {
-		me.push('a');
+	svc.loadData = function(scope) {
 		trelloAuth(function() {
-			me.push('b');
-			Trello.get('/members/me', { boards: "open", organizations: "all" }, onData);
-			me.push('e');
+			Trello.get('/members/me', { boards: "open", organizations: "all" }, function(data) {
+				me.data = data;
+				scope.$apply();
+			});
 		});
-		me.push('f');
-		
-		//setInterval(function() { me.push("x"); alert(me); }, 2000);
 	};
 
 	svc.me = function () {

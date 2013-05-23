@@ -4,6 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 function Home($scope, TrelloMeService) {
-	TrelloMeService.loadData();
+	TrelloMeService.loadData($scope);
 	$scope.me = TrelloMeService.me();
 }
