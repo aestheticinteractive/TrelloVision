@@ -1,0 +1,86 @@
+<div class="row" ng-show="model.ready">
+	
+	<div class="large-9 small-6 columns">
+		<h3>
+			{{model.data.name}}
+		</h3>
+		<p ng-show="model.data.desc != null">
+			{{model.data.desc}}<br/>
+		</p>
+		<p>
+			<a href="{{model.data.url}}" target="_blank">
+				View the "{{model.data.name}}" board at Trello.com >
+			</a>
+		</p>
+	</div>
+	
+	<div class="large-3 small-6 columns">
+		
+		<span class="swatch16" style="background-color: green; margin-top: 20px;"></span>
+		<span>{{model.data.labelNames.green}}</span><br/>
+		
+		<span class="swatch16" style="background-color: yellow;"></span>
+		<span>{{model.data.labelNames.yellow}}</span><br/>
+
+		<span class="swatch16" style="background-color: orange;"></span>
+		<span>{{model.data.labelNames.orange}}</span><br/>
+
+		<span class="swatch16" style="background-color: red;"></span>
+		<span>{{model.data.labelNames.red}}</span><br/>
+		
+		<span class="swatch16" style="background-color: purple;"></span>
+		<span>{{model.data.labelNames.purple}}</span><br/>
+		
+		<span class="swatch16" style="background-color: blue;"></span>
+		<span>{{model.data.labelNames.blue}}</span><br/>
+		
+	</div>
+	
+</div>
+
+<div class="row" ng-show="model.ready">
+	
+	<div class="large-12 small-12 columns">
+		<h5>
+			Cards for the "{{model.data.name}}" Board
+		</h5>
+
+		<table style="width: 100%;">
+			<thead>
+				<th>List</th>
+				<th>Name</th>
+				<th>Items</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="card in model.data.cards">
+					<td>
+						<a href="#/cardtable/list/{{card.idList}}">
+							{{model.getList(card.idList).name}}
+						</a>
+					</td>
+					<td>
+						<a href="{{card.url}}">
+							{{card.name}}
+						</a>
+					</td>
+					<td>
+						<span ng-repeat="lbl in card.labels" class="swatch16" 
+						      style="background-color: {{lbl.color}};" title="{{lbl.name}}">
+							&nbsp;
+						</span><span class="tag16" ng-show="card.badges.comments > 0" title="Comments">
+						    {{card.badges.comments}} c
+						</span><span class="tag16" ng-show="card.badges.votes > 0" title="Votes">
+						    {{card.badges.votes}} v
+						</span><span class="tag16" ng-show="card.badges.due != null" title="Due Date">
+						    {{model.getDateFmt(card.badges.due, 'MMM D')}}
+						</span><span ng-repeat="cl in card.checklists" class="tag16"
+							   title="{{cl.name}}">
+						    {{model.getChecklistString(cl)}} x
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>

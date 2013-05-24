@@ -4,3 +4,21 @@ ul, ol {
 	margin-left: 0;
 	padding-left: 25px;
 }
+
+.swatch16 {
+	font-size: 10px;
+	width: 16px;
+	height: 16px;
+	margin-right: 2px;
+	background-color: black;
+	display: inline-block;
+}
+
+.tag16 {
+	font-size: 10px;
+	padding: 0 4px 0 4px;
+	height: 16px;
+	margin-right: 2px;
+	background-color: #ddd;
+	display: inline-block;
+}

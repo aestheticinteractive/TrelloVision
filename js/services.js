@@ -2,9 +2,8 @@
 var TrelloVisionApp = angular.module('TrelloVision', []).config(['$routeProvider', buildRoutes]);
 
 var TrelloVisionModules = [
-	{ name: "Overview", uri: "/overview" },
-	{ name: "CSV Export", uri: "/csv" },
-	{ name: "Table", uri: "/table" }
+	{ name: 'Overview', uri: '/overview' },
+	{ name: 'Card Table', uri: '/cardtable' }
 ];
 
 
@@ -20,6 +19,18 @@ function buildRoutes($routeProvider) {
 			templateUrl: 'views/overview.html', 
 			controller: OverviewCtrl
 		})
+		.when('/cardtable', {
+			templateUrl: 'views/cardtable.html', 
+			controller: CardTableCtrl
+		})
+		.when('/cardtable/board/:boardId', {
+			templateUrl: 'views/cardtable-board.html', 
+			controller: CardTableCtrl
+		})
+		.when('/cardtable/list/:listId', {
+			templateUrl: 'views/cardtable-list.html', 
+			controller: CardTableCtrl
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -29,15 +40,14 @@ function buildRoutes($routeProvider) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 TrelloVisionApp.factory('TrelloDataService', function() {
-	var model = { data: null, ready: false, display: "none" };
+	var model = { data: null, ready: false };
 	var svc = {};
 
-	svc.loadData = function(scope, dataSets) {
+	svc.loadData = function(scope, apiCommand, dataSets) {
 		trelloAuth(function() {
-			Trello.get('/members/me', dataSets, function(data) {
+			Trello.get(apiCommand, dataSets, function(data) {
 				model.data = data;
 				model.ready = true;
-				model.display = "inherit";
 				scope.$apply();
 			});
 		});

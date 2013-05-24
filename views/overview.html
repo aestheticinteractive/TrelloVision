@@ -1,4 +1,4 @@
-<div class="row" style="display:{{model.display}}">
+<div class="row" ng-show="model.ready">
 
 	<div class="large-3 columns">
 		<img src="http://www.gravatar.com/avatar/{{model.data.gravatarHash}}?s=200&d=identicon" />
@@ -13,9 +13,9 @@
 	</div>
 	
 	<div class="large-9 columns">
-		<h3>
+		<h5>
 			My Boards
-		</h3>
+		</h5>
 
 		<ul class="square">
 			<li ng-repeat="board in model.data.boards | filter:{idOrganization:'!'}">
@@ -24,13 +24,13 @@
 		</ul>
 
 		<div ng-repeat="org in model.data.organizations">
-			<h3>
+			<h5>
 				{{org.displayName}}
-			</h3>
+			</h5>
 
 			<ul class="square">
 				<li ng-repeat="board in model.data.boards | filter:{idOrganization: org.id}">
-					{{board.name}}
+					<a href="#/cardtable/board/{{board.id}}">{{board.name}}</a>
 				</li>
 			</ul>
 		</div>

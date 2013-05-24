@@ -6,7 +6,7 @@
 function LayoutCtrl($scope, $location) {
 	for ( i in TrelloVisionModules ) {
 		var mod = TrelloVisionModules[i];
-		mod.selected = (mod.uri == $location.path() ? "selected" : "");
+		mod.selected = (mod.uri == $location.path() ? 'selected' : '');
 	}
 
 	$scope.model = {
@@ -20,13 +20,65 @@ function HomeCtrl($scope) {
 
 /*----------------------------------------------------------------------------------------------------*/
 function OverviewCtrl($scope, TrelloDataService) {
-	buildModel($scope, TrelloDataService, { organizations: "all", boards: "open" });
+	buildModel($scope, TrelloDataService, 'members/me', { organizations: 'all', boards: 'open' });
+}
+
+/*----------------------------------------------------------------------------------------------------*/
+function CardTableCtrl($scope, $routeParams, TrelloDataService) {
+	if ( $routeParams.boardId ) {
+		buildModel($scope, TrelloDataService, 'boards/'+$routeParams.boardId, { 
+			lists: 'open',
+			cards: 'open',
+			card_checklists: 'all'
+		});
+	}
+	else if ( $routeParams.listId ) {
+		buildModel($scope, TrelloDataService, 'lists/'+$routeParams.listId+'/cards', { 
+			cards: 'open',
+			card_checklists: 'all'
+		});
+	}
+	else {
+		$scope.model = { mode: 'none' };
+	}
+
+	$scope.model.getDateFmt = function(dateString, format) {
+		if ( dateString == null ) {
+			return '';
+		}
+
+		return moment(dateString).format(format);
+	};
+
+	$scope.model.getList = function(idList) {
+		var lists = $scope.model.data.lists;
+
+		for ( i in lists ) {
+			if ( lists[i].id == idList ) {
+				return lists[i];
+			}
+		}
+
+		return null;
+	};
+
+	$scope.model.getChecklistString = function(checklist) {
+		var comp = 0;
+
+		for ( i in checklist.checkItems ) {
+			if ( checklist.checkItems[i].state == 'complete' ) {
+				++comp;
+			}
+		}
+
+		return comp+'/'+checklist.checkItems.length;
+	};
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-function buildModel($scope, TrelloDataService, dataSets) {
-	TrelloDataService.loadData($scope, dataSets);
+function buildModel($scope, TrelloDataService, apiCommand, dataSets) {
+	TrelloDataService.loadData($scope, apiCommand, dataSets);
 	$scope.model = TrelloDataService.model();
 }
