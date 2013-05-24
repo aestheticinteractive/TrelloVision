@@ -1,9 +1,14 @@
 <!doctype html>
-<html lang="us" ng-app="TrelloVision">
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en" ng-app="TrelloVision"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app="TrelloVision"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width" />
 	<title>TrelloVision</title>
 	<link href="css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/foundation/foundation.css" />
+	<link rel="stylesheet" href="css/site.css" />
+	<script src="js/lib/custom.modernizr.js"></script>
 	<script src="js/lib/jquery-1.9.1.min.js"></script>
 	<script src="js/lib/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="js/lib/angular-1.0.7.min.js"></script>
@@ -13,39 +18,114 @@
 	<script src="js/controllers.js"></script>
 </head>
 <body>
-	<div style="display:inline-block;">
-		<p>
-			<a href="/">
-				Trello<strong>Vision</strong>
-			</a>
-		</p>
-	</div>
+	
+	<div class="row" style="margin-top: 30px;">
+		<div class="large-4 small-4 columns">
+			<h4 style="margin-bottom: 10px; font-weight: normal;">
+				<a href="#/" style="color:#888;">
+					Trello<strong>Vision</strong>
+				</a>
+			</h4>
+		</div>
 
-	<div style="display:inline-block; margin-left:20px;">
-		<select id="ModuleSelector" ng-controller="LayoutCtrl">
-			<option value="#/">
-				Select a module...
-			</option>
-			<option value="#{{mod.uri}}" {{mod.selected}} ng-repeat="mod in model.modules">
-				{{mod.name}}
-			</option>
-		</select>
+		<div class="large-4 small-4 columns">
+			&nbsp;
+		</div>
+		
+		<div class="large-4 small-4 columns" style="text-align: left;">
+			<select id="ModuleSelector" ng-controller="LayoutCtrl" style="padding:4px;">
+				<option value="#/">
+					Select a module...
+				</option>
+				<option value="#{{mod.uri}}" {{mod.selected}} ng-repeat="mod in model.modules">
+					{{mod.name}}
+				</option>
+			</select>
+		</div>
+
+		<hr />
 	</div>
 
 	<script type="text/javascript">
 		$("#ModuleSelector").change(function() {
-			 document.location.href = $(this).val();
+			document.location.href = $(this).val();
 		});
 	</script>
 
-	<hr />
+	
+	<div class="row">
+		<div class="large-12 columns">
+			<div ng-view></div>
+		</div>
+	</div>
 
-	<div ng-view></div>
-
-	<div id="dialogAuthFail" title="Trello Authorization Failure">
+	<div id="dialogAuthFail" title="Trello Authorization Failure" style="display: none;">
 		<p>
 			Sorry, your Trello authorization has failed. Please try again!
 		</p>
 	</div>
+
+	<script type="text/javascript">
+		document.write('<script src='+
+			('__proto__' in {} ? 'js/lib/zepto' : 'js/lib/jquery-1.9.1.min')+'.js><\/script>');
+	</script>
+
+	<script src="js/lib/foundation.min.js"></script>
+	<!--<script src="js/foundation/foundation.js"></script>
+		<script src="js/foundation/foundation.alerts.js"></script>
+		<script src="js/foundation/foundation.clearing.js"></script>
+		<script src="js/foundation/foundation.cookie.js"></script>
+		<script src="js/foundation/foundation.dropdown.js"></script>
+		<script src="js/foundation/foundation.forms.js"></script>
+		<script src="js/foundation/foundation.joyride.js"></script>
+		<script src="js/foundation/foundation.magellan.js"></script>
+		<script src="js/foundation/foundation.orbit.js"></script>
+		<script src="js/foundation/foundation.placeholder.js"></script>
+		<script src="js/foundation/foundation.reveal.js"></script>
+		<script src="js/foundation/foundation.section.js"></script>
+		<script src="js/foundation/foundation.tooltips.js"></script>
+		<script src="js/foundation/foundation.topbar.js"></script>
+		-->
+	
+	<script type="text/javascript">
+		$(document).foundation();
+
+		var btnCancel = {
+			text: "Cancel",
+			click: function () {
+				$(this).dialog("close");
+			}
+		};
+	
+		$("#dialogAuthStart").dialog({
+			autoOpen: false,
+			width: 400,
+			buttons: [
+				{
+					text: "Continue",
+					click: function () {
+						$(this).dialog("close");
+						trelloAuth();
+					}
+				},
+				btnCancel
+			]
+		});
+
+		$("#dialogAuthFail").dialog({
+			autoOpen: false,
+			width: 400,
+			buttons: [
+				{
+					text: "Try Again",
+					click: function () {
+						$(this).dialog("close");
+						trelloReAuth();
+					}
+				},
+				btnCancel
+			]
+		});
+	</script>
 </body>
 </html>

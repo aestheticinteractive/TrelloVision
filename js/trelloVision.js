@@ -5,47 +5,6 @@ $(init);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 function init() {
-	setupUi();
-}
-
-/*----------------------------------------------------------------------------------------------------*/
-function setupUi() {
-	var btnCancel = {
-		text: "Cancel",
-		click: function () {
-			$(this).dialog("close");
-		}
-	};
-	
-	$("#dialogAuthStart").dialog({
-		autoOpen: false,
-		width: 400,
-		buttons: [
-			{
-				text: "Continue",
-				click: function () {
-					$(this).dialog("close");
-					trelloAuth
-				}
-			},
-			btnCancel
-		]
-	});
-
-	$("#dialogAuthFail").dialog({
-		autoOpen: false,
-		width: 400,
-		buttons: [
-			{
-				text: "Try Again",
-				click: function () {
-					$(this).dialog("close");
-					trelloReAuth();
-				}
-			},
-			btnCancel
-		]
-	});
 }
 
 

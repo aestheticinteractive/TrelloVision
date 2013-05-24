@@ -1,0 +1,6 @@
+
+ul, ol {
+	list-style-position: outside;
+	margin-left: 0;
+	padding-left: 25px;
+}

@@ -1,25 +1,39 @@
+<div class="row" style="display:{{model.display}}">
 
-<div style="display:{{model.display}}">
+	<div class="large-3 columns">
+		<img src="http://www.gravatar.com/avatar/{{model.data.gravatarHash}}?s=200&d=identicon" />
 
-	<p>
-		<strong>
+		<h3 style="margin-bottom: 0;">
 			<a href="{{ model.data.url }}">{{model.data.username}}</a>
-		</strong>
-		({{model.data.fullName}})
-	</p>
-
-	<div ng-repeat="org in model.data.organizations">
-		<h3>
-			{{org.displayName}}
 		</h3>
 
-		<ul>
-			<li ng-repeat="board in model.data.boards | filter:{idOrganization: org.id}">
-				<p>
-					{{board.name}}
-				</p>
+		<h5 class="subheader" style="margin-top: 0;">
+			{{model.data.fullName}}
+		</h5>
+	</div>
+	
+	<div class="large-9 columns">
+		<h3>
+			My Boards
+		</h3>
+
+		<ul class="square">
+			<li ng-repeat="board in model.data.boards | filter:{idOrganization:'!'}">
+				{{board.name}}
 			</li>
 		</ul>
+
+		<div ng-repeat="org in model.data.organizations">
+			<h3>
+				{{org.displayName}}
+			</h3>
+
+			<ul class="square">
+				<li ng-repeat="board in model.data.boards | filter:{idOrganization: org.id}">
+					{{board.name}}
+				</li>
+			</ul>
+		</div>
 	</div>
 
 </div>
