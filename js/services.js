@@ -23,6 +23,14 @@ function buildRoutes($routeProvider) {
 			templateUrl: 'views/cardtable.html', 
 			controller: CardTableCtrl
 		})
+		.when('/cardtable/board', {
+			templateUrl: 'views/cardtable.html', 
+			controller: CardTableCtrl
+		})
+		.when('/cardtable/list', {
+			templateUrl: 'views/cardtable.html', 
+			controller: CardTableCtrl
+		})
 		.when('/cardtable/board/:boardId', {
 			templateUrl: 'views/cardtable-board.html', 
 			controller: CardTableCtrl
@@ -50,6 +58,31 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 				model.ready = true;
 				scope.$apply();
 			});
+		});
+	};
+
+	svc.loadMultiData = function(scope, apiRequests) {
+		trelloAuth(function() {
+			model.count = apiRequests.length;
+
+			for ( i in apiRequests ) {
+				var cmd = apiRequests[i].apiCommand;
+				var ds = apiRequests[i].dataSets;
+				var prop = apiRequests[i].propertyName;
+
+				var makeOnSuccess = function(prop) {
+					return function(data) {
+						model[prop] = data;
+
+						if ( --model.count == 0 ) {
+							model.ready = true;
+							scope.$apply();
+						}
+					};
+				};
+
+				Trello.get(cmd, ds, makeOnSuccess(prop));
+			}
 		});
 	};
 

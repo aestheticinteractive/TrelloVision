@@ -4,12 +4,12 @@
 		<h3>
 			{{model.data.name}}
 		</h3>
-		<p ng-show="model.data.desc != null">
+		<p ng-show="model.data.desc.length > 0">
 			{{model.data.desc}}<br/>
 		</p>
 		<p>
 			<a href="{{model.data.url}}" target="_blank">
-				View the "{{model.data.name}}" board at Trello.com >
+				View this board at Trello.com >
 			</a>
 		</p>
 	</div>
@@ -67,15 +67,17 @@
 						<span ng-repeat="lbl in card.labels" class="swatch16" 
 						      style="background-color: {{lbl.color}};" title="{{lbl.name}}">
 							&nbsp;
+						</span><span class="tag16" ng-show="card.idMembers.length > 0" title="Members">
+						    {{card.idMembers.length}}m
 						</span><span class="tag16" ng-show="card.badges.comments > 0" title="Comments">
-						    {{card.badges.comments}} c
+						    {{card.badges.comments}}c
 						</span><span class="tag16" ng-show="card.badges.votes > 0" title="Votes">
-						    {{card.badges.votes}} v
+						    {{card.badges.votes}}v
 						</span><span class="tag16" ng-show="card.badges.due != null" title="Due Date">
 						    {{model.getDateFmt(card.badges.due, 'MMM D')}}
 						</span><span ng-repeat="cl in card.checklists" class="tag16"
 							   title="{{cl.name}}">
-						    {{model.getChecklistString(cl)}} x
+						    {{model.getChecklistString(cl)}}
 						</span>
 					</td>
 				</tr>

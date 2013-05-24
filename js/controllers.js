@@ -28,19 +28,32 @@ function CardTableCtrl($scope, $routeParams, TrelloDataService) {
 	if ( $routeParams.boardId ) {
 		buildModel($scope, TrelloDataService, 'boards/'+$routeParams.boardId, { 
 			lists: 'open',
-			cards: 'open',
+			cards: 'visible',
 			card_checklists: 'all'
 		});
 	}
 	else if ( $routeParams.listId ) {
-		buildModel($scope, TrelloDataService, 'lists/'+$routeParams.listId+'/cards', { 
-			cards: 'open',
-			card_checklists: 'all'
-		});
+		var reqs = [
+			{
+				propertyName: 'list',
+				apiCommand: 'lists/'+$routeParams.listId,
+				dataSets: { cards: 'none' }
+			},
+			{
+				propertyName: 'cards',
+				apiCommand: 'lists/'+$routeParams.listId+'/cards',
+				dataSets: { cards: 'open', card_checklists: 'all' }
+			}
+		];
+
+		TrelloDataService.loadMultiData($scope, reqs);
+		$scope.model = TrelloDataService.model();
 	}
 	else {
 		$scope.model = { mode: 'none' };
 	}
+
+	////
 
 	$scope.model.getDateFmt = function(dateString, format) {
 		if ( dateString == null ) {

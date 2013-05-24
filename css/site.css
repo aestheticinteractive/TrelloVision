@@ -20,5 +20,6 @@ ul, ol {
 	height: 16px;
 	margin-right: 2px;
 	background-color: #ddd;
+	background-color: rgba(0,0,0,0.08);
 	display: inline-block;
 }

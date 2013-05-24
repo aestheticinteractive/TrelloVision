@@ -1,3 +1,61 @@
-<p>
-	{{model.data}}
-</p>
+<div class="row" ng-show="model.ready">
+	
+	<div class="large-12 small-12 columns">
+		<h3>
+			{{model.list.name}}
+		</h3>
+		<p>
+			See the Card Table for this list's <a href="#/cardtable/board/{{model.list.idBoard}}">
+			    board</a>.
+		</p>
+		<p>
+			<a href="{{model.list.url}}" target="_blank">
+				View this list at Trello.com >
+			</a>
+		</p>
+	</div>
+	
+</div>
+
+<div class="row" ng-show="model.ready">
+	
+	<div class="large-12 small-12 columns">
+		<h5>
+			Cards for the "{{model.list.name}}" List
+		</h5>
+
+		<table style="width: 100%;">
+			<thead>
+				<th>Name</th>
+				<th>Items</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="card in model.cards">
+					<td>
+						<a href="{{card.url}}">
+							{{card.name}}
+						</a>
+					</td>
+					<td>
+						<span ng-repeat="lbl in card.labels" class="swatch16" 
+						      style="background-color: {{lbl.color}};" title="{{lbl.name}}">
+							&nbsp;
+						</span><span class="tag16" ng-show="card.idMembers.length > 0" title="Members">
+						    {{card.idMembers.length}}m
+						</span><span class="tag16" ng-show="card.badges.comments > 0" title="Comments">
+						    {{card.badges.comments}}c
+						</span><span class="tag16" ng-show="card.badges.votes > 0" title="Votes">
+						    {{card.badges.votes}}v
+						</span><span class="tag16" ng-show="card.badges.due != null" title="Due Date">
+						    {{model.getDateFmt(card.badges.due, 'MMM D')}}
+						</span><span ng-repeat="cl in card.checklists" class="tag16"
+							   title="{{cl.name}}">
+						    {{model.getChecklistString(cl)}}
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>
