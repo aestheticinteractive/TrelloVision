@@ -1,0 +1,25 @@
+
+<div style="display:{{model.display}}">
+
+	<p>
+		<strong>
+			<a href="{{ model.data.url }}">{{model.data.username}}</a>
+		</strong>
+		({{model.data.fullName}})
+	</p>
+
+	<div ng-repeat="org in model.data.organizations">
+		<h3>
+			{{org.displayName}}
+		</h3>
+
+		<ul>
+			<li ng-repeat="board in model.data.boards | filter:{idOrganization: org.id}">
+				<p>
+					{{board.name}}
+				</p>
+			</li>
+		</ul>
+	</div>
+
+</div>
