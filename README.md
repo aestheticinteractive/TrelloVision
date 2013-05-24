@@ -9,3 +9,6 @@ TrelloVision is built in a very modular way, using AngularJS and other Javascrip
 #### For Trello Users
 
 Visit http://aestheticinteractive.github.io/TrelloVision to run the TrelloVision app. It will request **read-only** access to your public and private Trello boards. Don't worry -- TrelloVision does *nothing* with your data except display it back to you.
+
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/10df1ab56833c70758542414f676c725 "githalytics.com")](http://githalytics.com/aestheticinteractive/TrelloVision)
