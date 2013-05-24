@@ -45,11 +45,21 @@
 			Cards for the "{{model.data.name}}" Board
 		</h5>
 
-		<table style="width: 100%;">
+		<table style="width: 100%;" class="responsive">
 			<thead>
 				<th>List</th>
 				<th>Name</th>
-				<th>Items</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="card in model.data.cards">
@@ -64,18 +74,57 @@
 						</a>
 					</td>
 					<td>
-						<span ng-repeat="lbl in card.labels" class="swatch16" 
-						      style="background-color: {{lbl.color}};" title="{{lbl.name}}">
-							&nbsp;
-						</span><span class="tag16" ng-show="card.idMembers.length > 0" title="Members">
-						    {{card.idMembers.length}}m
-						</span><span class="tag16" ng-show="card.badges.comments > 0" title="Comments">
-						    {{card.badges.comments}}c
-						</span><span class="tag16" ng-show="card.badges.votes > 0" title="Votes">
-						    {{card.badges.votes}}v
-						</span><span class="tag16" ng-show="card.badges.due != null" title="Due Date">
-						    {{model.getDateFmt(card.badges.due, 'MMM D')}}
-						</span><span ng-repeat="cl in card.checklists" class="tag16"
+						<span ng-show="model.getCardLabelName(card, 'green')" class="swatch16" 
+						      style="background-color: green;"
+							  title="{{model.getCardLabelName(card, 'green')}}"></span>
+					</td>
+					<td>
+						<span ng-show="model.getCardLabelName(card, 'yellow')" class="swatch16" 
+						      style="background-color: yellow;"
+							  title="{{model.getCardLabelName(card, 'yellow')}}"></span>
+					</td>
+					<td>
+						<span ng-show="model.getCardLabelName(card, 'orange')" class="swatch16" 
+						      style="background-color: orange;"
+							  title="{{model.getCardLabelName(card, 'orange')}}"></span>
+					</td>
+					<td>
+						<span ng-show="model.getCardLabelName(card, 'red')" class="swatch16" 
+						      style="background-color: red;"
+							  title="{{model.getCardLabelName(card, 'red')}}"></span>
+					</td>
+					<td>
+						<span ng-show="model.getCardLabelName(card, 'purple')" class="swatch16" 
+						      style="background-color: purple;"
+							  title="{{model.getCardLabelName(card, 'purple')}}"></span>
+					</td>
+					<td>
+						<span ng-show="model.getCardLabelName(card, 'blue')" class="swatch16" 
+						      style="background-color: blue;"
+							  title="{{model.getCardLabelName(card, 'blue')}}"></span>
+					</td>
+					<td>
+						<span class="tag16" ng-show="card.idMembers.length > 0" title="Members">
+							{{card.idMembers.length}}m
+						</span>
+					</td>
+					<td>
+						<span class="tag16" ng-show="card.badges.comments > 0" title="Comments">
+							{{card.badges.comments}}c
+						</span>
+					</td>
+					<td>
+						<span class="tag16" ng-show="card.badges.votes > 0" title="Votes">
+							{{card.badges.votes}}v
+						</span>
+					</td>
+					<td>
+						<span class="tag16" ng-show="card.badges.due != null" title="Due Date">
+							{{model.getDateFmt(card.badges.due, 'MMM D')}}
+						</span>
+					</td>
+					<td>
+						<span ng-repeat="cl in card.checklists" class="tag16"
 							   title="{{cl.name}}">
 						    {{model.getChecklistString(cl)}}
 						</span>

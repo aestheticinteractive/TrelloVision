@@ -29,7 +29,9 @@ function CardTableCtrl($scope, $routeParams, TrelloDataService) {
 		buildModel($scope, TrelloDataService, 'boards/'+$routeParams.boardId, { 
 			lists: 'open',
 			cards: 'visible',
-			card_checklists: 'all'
+			card_checklists: 'all',
+			members: 'all',
+			organization: 'true'
 		});
 	}
 	else if ( $routeParams.listId ) {
@@ -85,6 +87,18 @@ function CardTableCtrl($scope, $routeParams, TrelloDataService) {
 		}
 
 		return comp+'/'+checklist.checkItems.length;
+	};
+
+	$scope.model.getCardLabelName = function(card, color) {
+		for ( i in card.labels ) {
+			var lbl = card.labels[i];
+
+			if ( lbl.color == color ) {
+				return lbl.name;
+			}
+		}
+
+		return null;
 	};
 }
 
