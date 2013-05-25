@@ -24,8 +24,15 @@ function OverviewCtrl($scope, TrelloDataService) {
 }
 
 /*----------------------------------------------------------------------------------------------------*/
-function CardTableCtrl($scope, $routeParams, TrelloDataService) {
-	if ( $routeParams.boardId ) {
+function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
+	if ( $routeParams.boardId == 'test' ) {
+		$scope.model = {};
+		$scope.model.ready = true;
+		$http.get('data/trelloDev.json').success(function(data) {
+			$scope.model.data = data;
+		});
+	}
+	else if ( $routeParams.boardId ) {
 		buildModel($scope, TrelloDataService, 'boards/'+$routeParams.boardId, { 
 			lists: 'open',
 			cards: 'visible',

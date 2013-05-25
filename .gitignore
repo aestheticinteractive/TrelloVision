@@ -214,3 +214,6 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 jquery-ui.html
+data/jfPrepare.json
+data/jfTasks.json
+data/fabricTasks.json
