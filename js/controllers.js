@@ -30,6 +30,7 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 		$scope.model.ready = true;
 		$http.get('data/trelloDev.json').success(function(data) {
 			$scope.model.data = data;
+			$scope.model.table = buildCardTable($scope);
 		});
 	}
 	else if ( $routeParams.boardId ) {
@@ -61,29 +62,7 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 	else {
 		$scope.model = { mode: 'none' };
 	}
-
-	////
-
-	$scope.model.getDateFmt = function(dateString, format) {
-		if ( dateString == null ) {
-			return '';
-		}
-
-		return moment(dateString).format(format);
-	};
-
-	$scope.model.getList = function(idList) {
-		var lists = $scope.model.data.lists;
-
-		for ( i in lists ) {
-			if ( lists[i].id == idList ) {
-				return lists[i];
-			}
-		}
-
-		return null;
-	};
-
+	
 	$scope.model.getChecklistString = function(checklist) {
 		var comp = 0;
 
@@ -95,18 +74,6 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 
 		return comp+'/'+checklist.checkItems.length;
 	};
-
-	$scope.model.getCardLabelName = function(card, color) {
-		for ( i in card.labels ) {
-			var lbl = card.labels[i];
-
-			if ( lbl.color == color ) {
-				return lbl.name;
-			}
-		}
-
-		return null;
-	};
 }
 
 
@@ -115,4 +82,50 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 function buildModel($scope, TrelloDataService, apiCommand, dataSets) {
 	TrelloDataService.loadData($scope, apiCommand, dataSets);
 	$scope.model = TrelloDataService.model();
+}
+
+/*----------------------------------------------------------------------------------------------------*/
+function buildCardTable($scope) {
+	var board = $scope.model.data;
+	
+	var table = {
+		board: board,
+		org: board.organization,
+		labelColors: ['green', 'yellow', 'orange', 'red', 'purple', 'blue'],
+		listIds: [],
+		listMap: {},
+		cards: []
+	};
+	
+	for ( li in board.lists ) {
+		var list = board.lists[li];
+		table.listIds.push(list.id);
+		table.listMap[list.id] = list;
+	}
+	
+	for ( ci in board.cards ) {
+		var card = board.cards[ci];
+		var c = {};
+		table.cards.push(c);
+		
+		c.id = card.id;
+		c.shortId = card.idShort;
+		c.listId = card.idList;
+		c.listName = table.listMap[card.idList].name;
+		c.name = card.name;
+		c.desc = card.desc;
+		c.url = card.url;
+		c.updated = moment(card.dateLastActivity).format('MMM D');
+		c.due = (card.due == null ? null : moment(card.due).format('MMM D'));
+		c.memberCount = card.idMembers.length;
+		c.commentCount = card.badges.comments; 
+		c.voteCount = card.badges.votes;
+		
+		for ( li in card.labels ) {
+			var lbl = card.labels[li];
+			c[lbl.color+'Label'] = lbl.name;
+		}
+	}
+	
+	return table;
 }

@@ -2,13 +2,13 @@
 	
 	<div class="large-9 small-6 columns">
 		<h3>
-			{{model.data.name}}
+			{{model.table.board.name}}
 		</h3>
 		<p ng-show="model.data.desc.length > 0">
-			{{model.data.desc}}<br/>
+			{{model.table.board.desc}}<br/>
 		</p>
 		<p>
-			<a href="{{model.data.url}}" target="_blank">
+			<a href="{{model.table.board.url}}" target="_blank">
 				View this board at Trello.com >
 			</a>
 		</p>
@@ -42,86 +42,60 @@
 	
 	<div class="large-12 small-12 columns">
 		<h5>
-			Cards for the "{{model.data.name}}" Board
+			Cards for the "{{model.table.board.name}}" Board
 		</h5>
 
 		<table style="width: 100%;" class="responsive">
 			<thead>
+				<th>#</th>
 				<th>List</th>
 				<th>Name</th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
+				<th>G</th>
+				<th>Y</th>
+				<th>O</th>
+				<th>R</th>
+				<th>P</th>
+				<th>B</th>
+				<th>#M</th>
+				<th>#C</th>
+				<th>#V</th>
+				<th>Due</th>
+				<th>Chk</th>
+				<!--th ng-repeat="mem in model.data.members">
+					{{mem.initials}}
+				</th-->
 			</thead>
 			<tbody>
-				<tr ng-repeat="card in model.data.cards">
-					<td>
-						<a href="#/cardtable/list/{{card.idList}}">
-							{{model.getList(card.idList).name}}
-						</a>
-					</td>
+				<tr ng-repeat="card in model.table.cards">
 					<td>
 						<a href="{{card.url}}">
-							{{card.name}}
+							{{card.shortId}}
 						</a>
 					</td>
 					<td>
-						<span ng-show="model.getCardLabelName(card, 'green')" class="swatch16" 
-						      style="background-color: green;"
-							  title="{{model.getCardLabelName(card, 'green')}}"></span>
+						<a href="#/cardtable/list/{{card.listId}}">
+							{{card.listName}}
+						</a>
 					</td>
 					<td>
-						<span ng-show="model.getCardLabelName(card, 'yellow')" class="swatch16" 
-						      style="background-color: yellow;"
-							  title="{{model.getCardLabelName(card, 'yellow')}}"></span>
+						{{card.name}}
+					</td>
+					<td ng-repeat="color in model.table.labelColors">
+						<span ng-show="card[color+'Label'] != null" class="swatch16" 
+						      style="background-color: {{color}};"
+							  title="{{card[color+'Label']}}"></span>
 					</td>
 					<td>
-						<span ng-show="model.getCardLabelName(card, 'orange')" class="swatch16" 
-						      style="background-color: orange;"
-							  title="{{model.getCardLabelName(card, 'orange')}}"></span>
+						<p>{{card.memberCount}}</p>
 					</td>
 					<td>
-						<span ng-show="model.getCardLabelName(card, 'red')" class="swatch16" 
-						      style="background-color: red;"
-							  title="{{model.getCardLabelName(card, 'red')}}"></span>
+						<p>{{card.commentCount}}</p>
 					</td>
 					<td>
-						<span ng-show="model.getCardLabelName(card, 'purple')" class="swatch16" 
-						      style="background-color: purple;"
-							  title="{{model.getCardLabelName(card, 'purple')}}"></span>
+						<p>{{card.voteCount}}</p>
 					</td>
 					<td>
-						<span ng-show="model.getCardLabelName(card, 'blue')" class="swatch16" 
-						      style="background-color: blue;"
-							  title="{{model.getCardLabelName(card, 'blue')}}"></span>
-					</td>
-					<td>
-						<span class="tag16" ng-show="card.idMembers.length > 0" title="Members">
-							{{card.idMembers.length}}m
-						</span>
-					</td>
-					<td>
-						<span class="tag16" ng-show="card.badges.comments > 0" title="Comments">
-							{{card.badges.comments}}c
-						</span>
-					</td>
-					<td>
-						<span class="tag16" ng-show="card.badges.votes > 0" title="Votes">
-							{{card.badges.votes}}v
-						</span>
-					</td>
-					<td>
-						<span class="tag16" ng-show="card.badges.due != null" title="Due Date">
-							{{model.getDateFmt(card.badges.due, 'MMM D')}}
-						</span>
+						<p>{{card.due}}</p>
 					</td>
 					<td>
 						<span ng-repeat="cl in card.checklists" class="tag16"
@@ -129,6 +103,9 @@
 						    {{model.getChecklistString(cl)}}
 						</span>
 					</td>
+					<!-- td ng-repeat="mem in model.data.members">
+						{{mem.initials}}
+					</td -->
 				</tr>
 			</tbody>
 		</table>
