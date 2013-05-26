@@ -91,7 +91,9 @@ function buildCardTable($scope) {
 	var table = {
 		board: board,
 		org: board.organization,
+		members: board.members,
 		labelColors: ['green', 'yellow', 'orange', 'red', 'purple', 'blue'],
+		labelMap: board.labelNames,
 		listIds: [],
 		listMap: {},
 		cards: []
@@ -120,11 +122,34 @@ function buildCardTable($scope) {
 		c.memberCount = card.idMembers.length;
 		c.commentCount = card.badges.comments; 
 		c.voteCount = card.badges.votes;
+		c.checklists = [];
 		
 		for ( li in card.labels ) {
 			var lbl = card.labels[li];
 			c[lbl.color+'Label'] = lbl.name;
 		}
+		
+		for ( li in card.checklists ) {
+			var list = card.checklists[li];
+			var comp = 0;
+			
+			for ( i in list.checkItems ) {
+				if ( list.checkItems[i].state == 'complete' ) {
+					++comp;
+				}
+			}
+
+			c.checklists.push({
+				name: list.name,
+				progress: comp+'/'+list.checkItems.length
+			});
+		}
+		
+		for ( mi in card.idMembers ) {
+			var memId = card.idMembers[mi];
+			c['member'+memId] = true;
+		}
+		
 	}
 	
 	return table;

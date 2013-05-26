@@ -15,25 +15,14 @@
 	</div>
 	
 	<div class="large-3 small-6 columns">
-		
-		<span class="swatch16" style="background-color: green; margin-top: 20px;"></span>
-		<span>{{model.data.labelNames.green}}</span><br/>
-		
-		<span class="swatch16" style="background-color: yellow;"></span>
-		<span>{{model.data.labelNames.yellow}}</span><br/>
-
-		<span class="swatch16" style="background-color: orange;"></span>
-		<span>{{model.data.labelNames.orange}}</span><br/>
-
-		<span class="swatch16" style="background-color: red;"></span>
-		<span>{{model.data.labelNames.red}}</span><br/>
-		
-		<span class="swatch16" style="background-color: purple;"></span>
-		<span>{{model.data.labelNames.purple}}</span><br/>
-		
-		<span class="swatch16" style="background-color: blue;"></span>
-		<span>{{model.data.labelNames.blue}}</span><br/>
-		
+		<br/>
+		<h5>
+			Labels
+		</h5>
+		<div ng-repeat="color in model.table.labelColors">
+			<span class="swatch16" style="background-color: {{color}};"></span>
+			<span style="font-size: 0.8em;">{{model.table.labelMap[color]}}</span>
+		</div>
 	</div>
 	
 </div>
@@ -45,25 +34,26 @@
 			Cards for the "{{model.table.board.name}}" Board
 		</h5>
 
-		<table style="width: 100%;" class="responsive">
+		<table style="font-size: 0.8em;" class="responsive">
 			<thead>
-				<th>#</th>
-				<th>List</th>
-				<th>Name</th>
-				<th>G</th>
-				<th>Y</th>
-				<th>O</th>
-				<th>R</th>
-				<th>P</th>
-				<th>B</th>
-				<th>#M</th>
-				<th>#C</th>
-				<th>#V</th>
-				<th>Due</th>
-				<th>Chk</th>
-				<!--th ng-repeat="mem in model.data.members">
+				<th title="Short ID">#</th>
+				<th title="List Name">List</th>
+				<th title="Card Name">Name</th>
+				<th title="Last Updated">Upd</th>
+				<th title="Green Label">G</th>
+				<th title="Yellow Label">Y</th>
+				<th title="Orange Label">O</th>
+				<th title="Red Label">R</th>
+				<th title="Purple Label">P</th>
+				<th title="Blue Label">B</th>
+				<th title="Member Count">#M</th>
+				<th title="Comment Count">#C</th>
+				<th title="Vote Count">#V</th>
+				<th title="Due Date">Due</th>
+				<th title="Checklists">Chk</th>
+				<th ng-repeat="mem in model.table.members" title="{{mem.fullName}} ({{mem.username}})">
 					{{mem.initials}}
-				</th-->
+				</th>
 			</thead>
 			<tbody>
 				<tr ng-repeat="card in model.table.cards">
@@ -80,32 +70,34 @@
 					<td>
 						{{card.name}}
 					</td>
+					<td>
+						{{card.updated}}
+					</td>
 					<td ng-repeat="color in model.table.labelColors">
 						<span ng-show="card[color+'Label'] != null" class="swatch16" 
 						      style="background-color: {{color}};"
 							  title="{{card[color+'Label']}}"></span>
 					</td>
 					<td>
-						<p>{{card.memberCount}}</p>
+						{{card.memberCount}}
 					</td>
 					<td>
-						<p>{{card.commentCount}}</p>
+						{{card.commentCount}}
 					</td>
 					<td>
-						<p>{{card.voteCount}}</p>
+						{{card.voteCount}}
 					</td>
 					<td>
-						<p>{{card.due}}</p>
+						{{card.due}}
 					</td>
 					<td>
-						<span ng-repeat="cl in card.checklists" class="tag16"
-							   title="{{cl.name}}">
-						    {{model.getChecklistString(cl)}}
+						<span ng-repeat="list in card.checklists" title="{{list.name}}">
+						    {{list.progress}}
 						</span>
 					</td>
-					<!-- td ng-repeat="mem in model.data.members">
-						{{mem.initials}}
-					</td -->
+					<td ng-repeat="mem in model.table.members">
+						<span ng-show="card['member'+mem.id] != null">X</span>
+					</td>
 				</tr>
 			</tbody>
 		</table>
