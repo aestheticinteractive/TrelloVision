@@ -51,17 +51,18 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 	var model = { data: null, ready: false };
 	var svc = {};
 
-	svc.loadData = function(scope, apiCommand, dataSets) {
+	svc.loadData = function(scope, apiCommand, dataSets, onSuccess) {
 		trelloAuth(function() {
 			Trello.get(apiCommand, dataSets, function(data) {
 				model.data = data;
 				model.ready = true;
+				onSuccess(scope);
 				scope.$apply();
 			});
 		});
 	};
 
-	svc.loadMultiData = function(scope, apiRequests) {
+	svc.loadMultiData = function(scope, apiRequests, onSuccess) {
 		trelloAuth(function() {
 			model.count = apiRequests.length;
 
@@ -76,6 +77,7 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 
 						if ( --model.count == 0 ) {
 							model.ready = true;
+							onSuccess(scope);
 							scope.$apply();
 						}
 					};

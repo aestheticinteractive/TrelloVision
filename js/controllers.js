@@ -1,6 +1,5 @@
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 function LayoutCtrl($scope, $location) {
@@ -30,7 +29,7 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 		$scope.model.ready = true;
 		$http.get('data/trelloDev.json').success(function(data) {
 			$scope.model.data = data;
-			$scope.model.table = buildCardTable($scope);
+			buildCardTable($scope);
 		});
 	}
 	else if ( $routeParams.boardId ) {
@@ -40,7 +39,7 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 			card_checklists: 'all',
 			members: 'all',
 			organization: 'true'
-		});
+		}, buildCardTable);
 	}
 	else if ( $routeParams.listId ) {
 		var reqs = [
@@ -56,7 +55,7 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 			}
 		];
 
-		TrelloDataService.loadMultiData($scope, reqs);
+		TrelloDataService.loadMultiData($scope, reqs, buildCardTable);
 		$scope.model = TrelloDataService.model();
 	}
 	else {
@@ -79,8 +78,8 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-function buildModel($scope, TrelloDataService, apiCommand, dataSets) {
-	TrelloDataService.loadData($scope, apiCommand, dataSets);
+function buildModel($scope, TrelloDataService, apiCommand, dataSets, onSuccess) {
+	TrelloDataService.loadData($scope, apiCommand, dataSets, onSuccess);
 	$scope.model = TrelloDataService.model();
 }
 
@@ -98,6 +97,8 @@ function buildCardTable($scope) {
 		listMap: {},
 		cards: []
 	};
+	
+	$scope.model.table = table;
 	
 	for ( li in board.lists ) {
 		var list = board.lists[li];
@@ -149,8 +150,5 @@ function buildCardTable($scope) {
 			var memId = card.idMembers[mi];
 			c['member'+memId] = true;
 		}
-		
 	}
-	
-	return table;
 }
