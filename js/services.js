@@ -1,5 +1,7 @@
 
-var TrelloVisionApp = angular.module('TrelloVision', []).config(['$routeProvider', buildRoutes]);
+var TrelloVisionApp = angular
+	.module('TrelloVision', [])
+	.config(['$routeProvider', buildRoutes]);
 
 var TrelloVisionModules = [
 	{ name: 'Overview', uri: '/overview' },
@@ -51,41 +53,45 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 	var model = { data: null, ready: false };
 	var svc = {};
 
-	svc.loadData = function(scope, apiCommand, dataSets, onSuccess) {
-		trelloAuth(function() {
-			Trello.get(apiCommand, dataSets, function(data) {
-				model.data = data;
-				model.ready = true;
-				onSuccess(scope);
-				scope.$apply();
-			});
+	svc.loadData = function(scope, apiCommand, dataSets, onDataSuccess) {
+		if ( !Trello.authorized() ) {
+			//return;
+		}
+		
+		Trello.get(apiCommand, dataSets, function(data) {
+			model.data = data;
+			model.ready = true;
+			if ( onDataSuccess ) { onDataSuccess(scope); }
+			scope.$apply();
 		});
 	};
 
-	svc.loadMultiData = function(scope, apiRequests, onSuccess) {
-		trelloAuth(function() {
-			model.count = apiRequests.length;
+	svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
+		if ( !Trello.authorized() ) {
+			return;
+		}
+		
+		model.count = apiRequests.length;
 
-			for ( i in apiRequests ) {
-				var cmd = apiRequests[i].apiCommand;
-				var ds = apiRequests[i].dataSets;
-				var prop = apiRequests[i].propertyName;
+		for ( i in apiRequests ) {
+			var cmd = apiRequests[i].apiCommand;
+			var ds = apiRequests[i].dataSets;
+			var prop = apiRequests[i].propertyName;
 
-				var makeOnSuccess = function(prop) {
-					return function(data) {
-						model[prop] = data;
+			var makeOnSuccess = function(prop) {
+				return function(data) {
+					model[prop] = data;
 
-						if ( --model.count == 0 ) {
-							model.ready = true;
-							onSuccess(scope);
-							scope.$apply();
-						}
-					};
+					if ( --model.count == 0 ) {
+						model.ready = true;
+						onDataSuccess(scope);
+						scope.$apply();
+					}
 				};
+			};
 
-				Trello.get(cmd, ds, makeOnSuccess(prop));
-			}
-		});
+			Trello.get(cmd, ds, makeOnSuccess(prop));
+		}
 	};
 
 	svc.model = function () {

@@ -5,50 +5,23 @@ $(init);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 function init() {
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*----------------------------------------------------------------------------------------------------*/
-function trelloAuth(onSuccess) {
+	if ( Trello.authorized() ) {
+		$('#SuccessMsg').show();
+		return;
+	}
+	
 	var opt = {
 		type: "redirect",
 		name: "TrelloVision",
 		scope: { read: true },
 		success: function() {
-			trelloAuthSuccess();
-			onSuccess();
+			$('#SuccessMsg').show();
 		},
-		error: this.trelloAuthError
+		error: function() {
+			$('#FailureMsg').show();
+			$("#dialogAuthFail").dialog("open");
+		}
 	};
 
 	Trello.authorize(opt);
-}
-
-/*----------------------------------------------------------------------------------------------------*/
-function trelloReAuth() {
-	Trello.deauthorize();
-	trelloAuth();
-}
-
-/*----------------------------------------------------------------------------------------------------*/
-function trelloAuthCheck() {
-	if ( !Trello.authorized() ) {
-		trelloAuthError();
-		return false;
-	}
-
-	return true;
-}
-
-/*----------------------------------------------------------------------------------------------------*/
-var trelloAuthSuccess = function() {
-	if ( !trelloAuthCheck() ) {
-		return;
-	}
-};
-
-/*----------------------------------------------------------------------------------------------------*/
-function trelloAuthError() {
-	$("#dialogAuthFail").dialog("open");
 }

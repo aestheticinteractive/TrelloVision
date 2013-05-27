@@ -9,17 +9,16 @@
 	<link rel="stylesheet" href="css/foundation/foundation.css" />
 	<link type="text/css" media="screen" rel="stylesheet" href="css/foundation/responsive-tables.css" />
 	<link rel="stylesheet" href="css/site.css" />
+	<script src="https://api.trello.com/1/client.js?key=299356e8538e20d425a72149ee8703bc"></script>
 	<script src="js/lib/custom.modernizr.js"></script>
 	<script src="js/lib/jquery-1.9.1.min.js"></script>
 	<script src="js/lib/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="js/lib/angular-1.0.7.min.js"></script>
 	<script src="js/lib/moment.min.js"></script>
-	<script src="https://api.trello.com/1/client.js?key=299356e8538e20d425a72149ee8703bc"></script>
-	<script src="js/trelloVision.js"></script>
 	<script src="js/services.js"></script>
 	<script src="js/controllers.js"></script>
 </head>
-<body>
+<body ng-controller="LayoutCtrl">
 	
 	<div class="row" style="margin-top: 30px;">
 		<div class="large-4 small-4 columns">
@@ -35,7 +34,7 @@
 		</div>
 		
 		<div class="large-4 small-4 columns" style="text-align: left;">
-			<select id="ModuleSelector" ng-controller="LayoutCtrl" style="padding:4px;">
+			<select id="ModuleSelector" style="padding:4px;">
 				<option value="#/">
 					Select a module...
 				</option>
@@ -54,17 +53,16 @@
 		});
 	</script>
 
-	
 	<div class="row">
 		<div class="large-12 columns">
+			<div ng-show="!model.authorized" style="background-color:#ffeeaa;">
+				<p>
+					You are not authenticated with Trello. Please visit the 
+					<a href="auth.html">authentication page</a> to continue.
+				</p>
+			</div>
 			<div ng-view></div>
 		</div>
-	</div>
-
-	<div id="dialogAuthFail" title="Trello Authorization Failure" style="display: none;">
-		<p>
-			Sorry, your Trello authorization has failed. Please try again!
-		</p>
 	</div>
 
 	<script type="text/javascript">
@@ -74,61 +72,9 @@
 
 	<script src="js/lib/foundation.min.js"></script>
 	<script src="js/lib/responsive-tables.js"></script>
-	<!--<script src="js/foundation/foundation.js"></script>
-		<script src="js/foundation/foundation.alerts.js"></script>
-		<script src="js/foundation/foundation.clearing.js"></script>
-		<script src="js/foundation/foundation.cookie.js"></script>
-		<script src="js/foundation/foundation.dropdown.js"></script>
-		<script src="js/foundation/foundation.forms.js"></script>
-		<script src="js/foundation/foundation.joyride.js"></script>
-		<script src="js/foundation/foundation.magellan.js"></script>
-		<script src="js/foundation/foundation.orbit.js"></script>
-		<script src="js/foundation/foundation.placeholder.js"></script>
-		<script src="js/foundation/foundation.reveal.js"></script>
-		<script src="js/foundation/foundation.section.js"></script>
-		<script src="js/foundation/foundation.tooltips.js"></script>
-		<script src="js/foundation/foundation.topbar.js"></script>
-		-->
 	
 	<script type="text/javascript">
 		$(document).foundation();
-
-		var btnCancel = {
-			text: "Cancel",
-			click: function () {
-				$(this).dialog("close");
-			}
-		};
-	
-		$("#dialogAuthStart").dialog({
-			autoOpen: false,
-			width: 400,
-			buttons: [
-				{
-					text: "Continue",
-					click: function () {
-						$(this).dialog("close");
-						trelloAuth();
-					}
-				},
-				btnCancel
-			]
-		});
-
-		$("#dialogAuthFail").dialog({
-			autoOpen: false,
-			width: 400,
-			buttons: [
-				{
-					text: "Try Again",
-					click: function () {
-						$(this).dialog("close");
-						trelloReAuth();
-					}
-				},
-				btnCancel
-			]
-		});
 	</script>
 </body>
 </html>

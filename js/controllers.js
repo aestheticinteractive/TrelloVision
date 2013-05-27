@@ -7,9 +7,10 @@ function LayoutCtrl($scope, $location) {
 		var mod = TrelloVisionModules[i];
 		mod.selected = (mod.uri == $location.path() ? 'selected' : '');
 	}
-
+	
 	$scope.model = {
-		modules: TrelloVisionModules
+		modules: TrelloVisionModules,
+		authorized: 'true' //Trello.authorized()
 	};
 }
 
@@ -41,7 +42,7 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 			organization: 'true'
 		}, buildCardTable);
 	}
-	else if ( $routeParams.listId ) {
+	/*else if ( $routeParams.listId ) {
 		var reqs = [
 			{
 				propertyName: 'list',
@@ -57,22 +58,10 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 
 		TrelloDataService.loadMultiData($scope, reqs, buildCardTable);
 		$scope.model = TrelloDataService.model();
-	}
+	}*/
 	else {
 		$scope.model = { mode: 'none' };
 	}
-	
-	$scope.model.getChecklistString = function(checklist) {
-		var comp = 0;
-
-		for ( i in checklist.checkItems ) {
-			if ( checklist.checkItems[i].state == 'complete' ) {
-				++comp;
-			}
-		}
-
-		return comp+'/'+checklist.checkItems.length;
-	};
 }
 
 
