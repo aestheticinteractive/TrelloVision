@@ -50,12 +50,13 @@ function buildRoutes($routeProvider) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 TrelloVisionApp.factory('TrelloDataService', function() {
-	var model = { data: null, ready: false };
+	var model = { data: null, ready: false, error: null };
 	var svc = {};
 
 	svc.loadData = function(scope, apiCommand, dataSets, onDataSuccess) {
 		if ( !Trello.authorized() ) {
-			//return;
+			model.error = 'Trello not authorized.';
+			return;
 		}
 		
 		Trello.get(apiCommand, dataSets, function(data) {
@@ -66,7 +67,7 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 		});
 	};
 
-	svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
+	/*svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
 		if ( !Trello.authorized() ) {
 			return;
 		}
@@ -92,7 +93,7 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 
 			Trello.get(cmd, ds, makeOnSuccess(prop));
 		}
-	};
+	};*/
 
 	svc.model = function () {
 		return model;

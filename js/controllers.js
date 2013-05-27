@@ -10,7 +10,7 @@ function LayoutCtrl($scope, $location) {
 	
 	$scope.model = {
 		modules: TrelloVisionModules,
-		authorized: 'true' //Trello.authorized()
+		authorized: Trello.authorized()
 	};
 }
 
@@ -32,8 +32,11 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 			$scope.model.data = data;
 			buildCardTable($scope);
 		});
+		
+		return;
 	}
-	else if ( $routeParams.boardId ) {
+	
+	if ( $routeParams.boardId ) {
 		buildModel($scope, TrelloDataService, 'boards/'+$routeParams.boardId, { 
 			lists: 'open',
 			cards: 'visible',
@@ -41,6 +44,8 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 			members: 'all',
 			organization: 'true'
 		}, buildCardTable);
+		
+		return;
 	}
 	/*else if ( $routeParams.listId ) {
 		var reqs = [
@@ -59,9 +64,8 @@ function CardTableCtrl($scope, $routeParams, $http, TrelloDataService) {
 		TrelloDataService.loadMultiData($scope, reqs, buildCardTable);
 		$scope.model = TrelloDataService.model();
 	}*/
-	else {
-		$scope.model = { mode: 'none' };
-	}
+	
+	$scope.model = { mode: 'none' };
 }
 
 

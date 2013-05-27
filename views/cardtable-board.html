@@ -29,6 +29,31 @@
 
 <div class="row" ng-show="model.ready">
 	
+	<hr/>
+	
+	<div class="large-2 columns">
+		<h5>
+			Table Filters:
+		</h5>
+	</div>
+	
+	<div class="large-2 columns">
+		<input type="text" placeholder="List Name" ng-model="search.listName">
+	</div>
+	
+	<div class="large-2 columns">
+		<input type="text" placeholder="Card Name" ng-model="search.name">
+	</div>
+	
+	<div class="large-6 columns">
+	</div>
+	
+	<hr/>
+	
+</div>
+
+<div class="row" ng-show="model.ready">
+	
 	<div class="large-12 small-12 columns">
 		<h5>
 			Cards for the "{{model.table.board.name}}" Board
@@ -56,7 +81,7 @@
 				</th>
 			</thead>
 			<tbody>
-				<tr ng-repeat="card in model.table.cards">
+				<tr ng-repeat="card in model.table.cards | filter:search">
 					<td>
 						<a href="{{card.url}}">
 							{{card.shortId}}
