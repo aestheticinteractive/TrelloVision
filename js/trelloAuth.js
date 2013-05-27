@@ -1,26 +1,14 @@
 
-$(init);
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-function init() {
-	if ( Trello.authorized() ) {
-		$('#SuccessMsg').show();
-		return;
-	}
-	
+function trelloAuth(onSuccess, onError) {
 	var opt = {
-		type: "redirect",
+		type: "popup",
 		name: "TrelloVision",
 		scope: { read: true },
-		success: function() {
-			$('#SuccessMsg').show();
-		},
-		error: function() {
-			$('#FailureMsg').show();
-			$("#dialogAuthFail").dialog("open");
-		}
+		success: onSuccess,
+		error: onError
 	};
 
 	Trello.authorize(opt);

@@ -9,13 +9,15 @@
 	<link rel="stylesheet" href="css/foundation/foundation.css" />
 	<link type="text/css" media="screen" rel="stylesheet" href="css/foundation/responsive-tables.css" />
 	<link rel="stylesheet" href="css/site.css" />
-	<script src="https://api.trello.com/1/client.js?key=299356e8538e20d425a72149ee8703bc"></script>
 	<script src="js/lib/custom.modernizr.js"></script>
 	<script src="js/lib/jquery-1.9.1.min.js"></script>
 	<script src="js/lib/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="https://api.trello.com/1/client.js?key=299356e8538e20d425a72149ee8703bc"></script>
 	<script src="js/lib/angular-1.0.7.min.js"></script>
 	<script src="js/lib/moment.min.js"></script>
+	<script src="js/trelloAuth.js"></script>
 	<script src="js/services.js"></script>
+	<script src="js/services.cardTable.js"></script>
 	<script src="js/controllers.js"></script>
 </head>
 <body ng-controller="LayoutCtrl">
@@ -53,14 +55,19 @@
 		});
 	</script>
 
+	<div class="row" ng-show="model.error" style="background-color:#ffaaaa;">
+		<div class="large-12 columns">
+			<h5>
+				An error occurred:
+			</h5>
+			<p>
+				{{model.error}}
+			</p>
+		</div>
+	</div>
+			
 	<div class="row">
 		<div class="large-12 columns">
-			<div ng-show="!model.authorized" style="background-color:#ffeeaa;">
-				<p>
-					You are not authenticated with Trello. Please visit the 
-					<a href="auth.html">authentication page</a> to continue.
-				</p>
-			</div>
 			<div ng-view></div>
 		</div>
 	</div>

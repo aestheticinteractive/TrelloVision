@@ -29,16 +29,12 @@ function buildRoutes($routeProvider) {
 			templateUrl: 'views/cardtable.html', 
 			controller: CardTableCtrl
 		})
-		.when('/cardtable/list', {
-			templateUrl: 'views/cardtable.html', 
-			controller: CardTableCtrl
+		.when('/cardtable/test', {
+			templateUrl: 'views/cardtable-board.html', 
+			controller: CardTableTestCtrl
 		})
 		.when('/cardtable/board/:boardId', {
 			templateUrl: 'views/cardtable-board.html', 
-			controller: CardTableCtrl
-		})
-		.when('/cardtable/list/:listId', {
-			templateUrl: 'views/cardtable-list.html', 
 			controller: CardTableCtrl
 		})
 		.otherwise({
@@ -50,21 +46,37 @@ function buildRoutes($routeProvider) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 TrelloVisionApp.factory('TrelloDataService', function() {
-	var model = { data: null, ready: false, error: null };
 	var svc = {};
-
+	
+	var model = {
+		data: null,
+		ready: false,
+		error: null
+	};
+	
 	svc.loadData = function(scope, apiCommand, dataSets, onDataSuccess) {
-		if ( !Trello.authorized() ) {
-			model.error = 'Trello not authorized.';
-			return;
-		}
-		
-		Trello.get(apiCommand, dataSets, function(data) {
+		var onGetSuccess = function(data) {
 			model.data = data;
 			model.ready = true;
 			if ( onDataSuccess ) { onDataSuccess(scope); }
 			scope.$apply();
-		});
+		};
+		
+		var onGetError = function() {
+			model.error = "Trello data access failed.";
+			scope.$apply();
+		};
+		
+		var onAuthSuccess = function() {
+			Trello.get(apiCommand, dataSets, onGetSuccess, onGetError);
+		};
+		
+		var onAuthError = function() {
+			model.error = "Trello authorization failed.";
+			scope.$apply();
+		};
+		
+		trelloAuth(onAuthSuccess, onAuthError);
 	};
 
 	/*svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
