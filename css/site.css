@@ -14,12 +14,10 @@ ul, ol {
 	display: inline-block;
 }
 
-.tag16 {
-	font-size: 10px;
-	padding: 0 4px 0 4px;
-	height: 16px;
-	margin-right: 2px;
-	background-color: #ddd;
-	background-color: rgba(0,0,0,0.08);
-	display: inline-block;
+table thead tr th  {
+    padding: 0.6em 0.4em;
+}
+
+table tr td {
+    padding: 0.4em;
 }
