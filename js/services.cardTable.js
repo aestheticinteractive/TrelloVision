@@ -165,8 +165,8 @@ function buildCardTableCsv(scope) {
 			'"'+fixCsvString(card.name)+'",'+
 			'"'+fixCsvString(card.desc)+'",'+
 			'"'+fixCsvString(card.url)+'",'+
-			'"'+card.updated+'",'+
-			'"'+(card.due ? card.due : '')+'",';
+			'"'+card.updatedRaw+'",'+
+			'"'+(card.dueRaw ? card.dueRaw : '')+'",';
 		
 		for ( li in table.labelColors ) {
 			var color = table.labelColors[li];
