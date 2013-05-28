@@ -217,3 +217,4 @@ jquery-ui.html
 data/jfPrepare.json
 data/jfTasks.json
 data/fabricTasks.json
+data/trelloClient.js

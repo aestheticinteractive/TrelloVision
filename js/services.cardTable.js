@@ -20,6 +20,24 @@ TrelloVisionApp.factory('CardTableService', function() {
 		});
 		
 		scope.model = TrelloDataService.model();
+		scope.sortProp = null;
+		scope.sortRev = false;
+
+		scope.onSort = function (sortProp) {
+			if ( scope.sortProp == sortProp ) {
+				if ( scope.sortRev ) {
+					scope.sortProp = null;
+					scope.sortRev = false;
+					return;
+				}
+
+				scope.sortRev = true;
+				return;
+			}
+
+			scope.sortProp = sortProp;
+			scope.sortRev = false;
+		};
 	};
 	
 	return svc;
@@ -80,7 +98,9 @@ function buildCardTable(scope) {
 		c.name = card.name;
 		c.desc = card.desc;
 		c.url = card.url;
+		c.updatedRaw = card.dateLastActivity;
 		c.updated = moment(card.dateLastActivity).format('MMM D');
+		c.dueRaw = card.due;
 		c.due = (card.due == null ? null : moment(card.due).format('MMM D'));
 		c.memberCount = card.idMembers.length;
 		c.commentCount = card.badges.comments; 

@@ -64,27 +64,27 @@
 
 		<table style="font-size: 0.8em;" class="responsive">
 			<thead>
-				<th title="Short ID">#</th>
-				<th title="List Name">List</th>
-				<th title="Card Name">Name</th>
-				<th title="Last Updated">Upd</th>
-				<th title="Green Label">G</th>
-				<th title="Yellow Label">Y</th>
-				<th title="Orange Label">O</th>
-				<th title="Red Label">R</th>
-				<th title="Purple Label">P</th>
-				<th title="Blue Label">B</th>
-				<th title="Member Count">#M</th>
-				<th title="Comment Count">#C</th>
-				<th title="Vote Count">#V</th>
-				<th title="Due Date">Due</th>
+				<th title="Short ID"><a href="" ng-click="onSort('shortId');">#</a></th>
+				<th title="List Name"><a href="" ng-click="onSort('listName');">List</a></th>
+				<th title="Card Name"><a href="" ng-click="onSort('name');">Name</a></th>
+				<th title="Last Updated"><a href="" ng-click="onSort('updatedRaw');">Upd</a></th>
+				<th title="Green Label"><a href="" ng-click="onSort('greenLabel');">G</a></th>
+				<th title="Yellow Label"><a href="" ng-click="onSort('yellowLabel');">Y</a></th>
+				<th title="Orange Label"><a href="" ng-click="onSort('orangeLabel');">O</a></th>
+				<th title="Red Label"><a href="" ng-click="onSort('redLabel');">R</a></th>
+				<th title="Purple Label"><a href="" ng-click="onSort('purpleLabel');">P</a></th>
+				<th title="Blue Label"><a href="" ng-click="onSort('blueLabel');">B</a></th>
+				<th title="Member Count"><a href="" ng-click="onSort('-memberCount');">#M</a></th>
+				<th title="Comment Count"><a href="" ng-click="onSort('-commentCount');">#C</a></th>
+				<th title="Vote Count"><a href="" ng-click="onSort('-voteCount');">#V</a></th>
+				<th title="Due Date"><a href="" ng-click="onSort('dueRaw');">Due</a></th>
 				<th title="Checklists">Chk</th>
 				<th ng-repeat="mem in model.table.members" title="{{mem.fullName}} ({{mem.username}})">
-					{{mem.initials}}
+					<a href="" ng-click="onSort('member'+mem.id);">{{mem.initials}}</a>
 				</th>
 			</thead>
 			<tbody>
-				<tr ng-repeat="card in model.table.cards | filter:search">
+				<tr ng-repeat="card in model.table.cards | filter:search | orderBy:sortProp:sortRev">
 					<td>
 						<a href="{{card.url}}">
 							{{card.shortId}}
