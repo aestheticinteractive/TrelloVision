@@ -21,3 +21,32 @@ table thead tr th  {
 table tr td {
     padding: 0.4em;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none;
+}
+
+.footer {
+	text-align: center;
+	font-size: 0.8em;
+	color: #bbb;
+}
+
+.footer a {
+	color: #888;
+}
+
+.footer a:hover {
+	color: #333;
+}
+
+.wait {
+	background-color: #ffeeaa;
+	padding: 5px 10px;
+}
+
+.wait p {
+	font-style: italic;
+	padding: 0;
+	margin: 0;
+}

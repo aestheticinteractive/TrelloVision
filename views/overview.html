@@ -1,10 +1,14 @@
-<div class="row" ng-show="model.ready">
+<div ng-show="!model.ready" class="wait">
+	<p>Loading Trello data, please wait...</p>
+</div>
+
+<div ng-cloak class="row" ng-show="model.ready">
 
 	<div class="large-3 columns">
 		<img src="http://www.gravatar.com/avatar/{{model.data.gravatarHash}}?s=200&d=identicon" />
 
 		<h3 style="margin-bottom: 0;">
-			<a href="{{ model.data.url }}">{{model.data.username}}</a>
+			<a href="{{model.data.url}}">{{model.data.username}}</a>
 		</h3>
 
 		<h5 class="subheader" style="margin-top: 0;">
@@ -30,7 +34,7 @@
 
 			<ul class="square">
 				<li ng-repeat="board in model.data.boards | filter:{idOrganization: org.id}">
-					<a href="#/cardtable/board/{{board.id}}">{{board.name}}</a>
+					<a href="#/cardtable/board/{{board.id}}" target="_self">{{board.name}}</a>
 				</li>
 			</ul>
 		</div>

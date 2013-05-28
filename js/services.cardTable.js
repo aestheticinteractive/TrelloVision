@@ -20,6 +20,10 @@ TrelloVisionApp.factory('CardTableService', function() {
 		});
 		
 		scope.model = TrelloDataService.model();
+		scope.model.ready = false;
+		scope.model.table = null;
+		scope.model.csv = null;
+
 		scope.sortProp = null;
 		scope.sortRev = false;
 

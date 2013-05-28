@@ -35,7 +35,7 @@
 	<div class="row" style="margin-top: 30px;">
 		<div class="large-4 small-4 columns">
 			<h4 style="margin-bottom: 10px; font-weight: normal;">
-				<a href="#/" style="color:#888;">
+				<a href="#/" target="_self" style="color:#888;">
 					Trello<strong>Vision</strong>
 				</a>
 			</h4>
@@ -45,7 +45,7 @@
 			&nbsp;
 		</div>
 		
-		<div class="large-4 small-4 columns" style="text-align: left;">
+		<div class="large-4 small-4 columns" style="text-align: left;" ng-cloak ng-show="model.ready">
 			<select id="ModuleSelector" style="padding:4px;">
 				<option value="#/">
 					Select a module...
@@ -64,24 +64,31 @@
 			document.location.href = $(this).val();
 		});
 	</script>
-
-	<div class="row" ng-show="model.error" style="background-color:#ffaaaa;">
-		<div class="large-12 columns">
-			<h5>
-				An error occurred:
-			</h5>
-			<p>
-				{{model.error}}
-			</p>
-		</div>
-	</div>
-			
-	<div class="row">
+	
+	<div class="row" ng-cloak ng-show="model.ready">
 		<div class="large-12 columns">
 			<div ng-view></div>
 		</div>
 	</div>
-
+	
+	<div class="row">
+		<div class="large-12 columns footer">
+			<hr />
+			<p>
+				TrelloVision provides new ways to view your Trello data.<br/>
+				<a href="#/" target="_self">
+					Home
+				</a> | 
+				<a href="https://github.com/aestheticinteractive/TrelloVision" target="_blank">
+					GitHub project
+				</a> | 
+				<a href="https://trello.com/board/development/519f231e58f86a957d00295a" target="_blank">
+					Trello board
+				</a>
+			</p>
+		</div>
+	</div>
+	
 	<script type="text/javascript">
 		document.write('<script src='+
 			('__proto__' in {} ? 'js/lib/zepto' : 'js/lib/jquery-1.9.1.min')+'.js><\/script>');

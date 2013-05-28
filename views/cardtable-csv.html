@@ -1,3 +1,7 @@
+<div ng-cloak ng-show="!model.ready" class="wait">
+	<p>Loading Trello data, please wait...</p>
+</div>
+
 <div class="row" ng-show="model.ready">
 	
 	<div class="large-12 small-12 columns">
@@ -6,7 +10,7 @@
 		</h3>
 		<p>
 			The following text is the raw CSV output for this board.
-			<a href="#/cardtable/board/{{model.table.board.id}}">
+			<a href="#/cardtable/board/{{model.table.board.id}}" target="_self">
 				Return to CardTable view >
 			</a>
 		</p>

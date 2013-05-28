@@ -53,8 +53,8 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 	var svc = {};
 	
 	var model = {
-		data: null,
 		ready: false,
+		data: null,
 		error: null
 	};
 	

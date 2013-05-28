@@ -8,7 +8,7 @@ function LayoutCtrl($scope, $location) {
 		mod.selected = (mod.uri == $location.path() ? 'selected' : '');
 	}
 	
-	$scope.model = { modules: TrelloVisionModules };
+	$scope.model = { modules: TrelloVisionModules, ready: true };
 }
 
 /*----------------------------------------------------------------------------------------------------*/
@@ -19,6 +19,7 @@ function HomeCtrl($scope) {
 function OverviewCtrl($scope, TrelloDataService) {
 	TrelloDataService.loadData($scope, 'members/me', { organizations: 'all', boards: 'open' });
 	$scope.model = TrelloDataService.model();
+	$scope.model.ready = false;
 }
 
 /*----------------------------------------------------------------------------------------------------*/
