@@ -33,6 +33,10 @@ function buildRoutes($routeProvider) {
 			templateUrl: 'views/cardtable-board.html', 
 			controller: CardTableTestCtrl
 		})
+		.when('/cardtable/board/:boardId/csv', {
+			templateUrl: 'views/cardtable-csv.html', 
+			controller: CardTableCsvCtrl
+		})
 		.when('/cardtable/board/:boardId', {
 			templateUrl: 'views/cardtable-board.html', 
 			controller: CardTableCtrl

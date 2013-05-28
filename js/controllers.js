@@ -28,6 +28,14 @@ function CardTableCtrl($scope, $routeParams, CardTableService, TrelloDataService
 }
 
 /*----------------------------------------------------------------------------------------------------*/
+function CardTableCsvCtrl($scope, $routeParams, CardTableCsvService, 
+																CardTableService, TrelloDataService) {
+	CardTableCsvService.loadBoardData(
+		TrelloDataService, CardTableService, $scope, $routeParams.boardId);
+	$scope.model = TrelloDataService.model();
+}
+
+/*----------------------------------------------------------------------------------------------------*/
 function CardTableTestCtrl($scope, $http, CardTableService, TrelloDataService) {
 	$scope.model = { ready: true };
 	
