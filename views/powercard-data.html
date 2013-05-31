@@ -1,0 +1,16 @@
+<div ng-cloak ng-show="!model.ready" class="wait">
+	<p>Loading Trello data, please wait...</p>
+</div>
+
+<div class="row" ng-show="model.ready">
+	
+	<div class="large-9 small-6 columns">
+		<h3>
+			{{model.data.name}}
+		</h3>
+		<p ng-show="model.data.desc.length > 0">
+			{{model.data.desc}}<br/>
+		</p>
+	</div>
+	
+</div>

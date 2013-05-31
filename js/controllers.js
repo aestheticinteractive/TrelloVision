@@ -26,6 +26,8 @@ function OverviewCtrl($scope, TrelloDataService) {
 	$scope.model.ready = false;
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 function CardTableCtrl($scope, $routeParams, CardTableService, TrelloDataService) {
 	CardTableService.loadBoardData(TrelloDataService, $scope, $routeParams.boardId);
@@ -48,4 +50,17 @@ function CardTableTestCtrl($scope, $http, CardTableService, TrelloDataService) {
 		$scope.model.data = data;
 		buildCardTable($scope);
 	});
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*----------------------------------------------------------------------------------------------------*/
+function PowerCardCtrl($scope, $routeParams, PowerCardService, TrelloDataService) {
+	if ( !$routeParams.cardId ) {
+		$scope.model = { ready: true };
+		return;
+	}
+
+	PowerCardService.loadCardData(TrelloDataService, $scope, $routeParams.cardId);
+	$scope.model = TrelloDataService.model();
 }
