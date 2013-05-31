@@ -5,7 +5,7 @@ var TrelloVisionApp = angular
 
 var TrelloVisionModules = [
 	{ name: 'Overview', uri: '/overview' },
-	{ name: 'Card Table', uri: '/cardtable' },
+	{ name: 'CardTable', uri: '/cardtable' },
 	{ name: 'PowerCard', uri: '/powercard' }
 ];
 
@@ -30,10 +30,10 @@ function buildRoutes($routeProvider) {
 			templateUrl: 'views/cardtable.html', 
 			controller: CardTableCtrl
 		})
-		.when('/cardtable/test', {
+		/*.when('/cardtable/test', {
 			templateUrl: 'views/cardtable-board.html', 
 			controller: CardTableTestCtrl
-		})
+		})*/
 		.when('/cardtable/board/:boardId/csv', {
 			templateUrl: 'views/cardtable-csv.html', 
 			controller: CardTableCsvCtrl

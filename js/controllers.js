@@ -16,8 +16,7 @@ function LayoutCtrl($scope, $location, $window) {
 }
 
 /*----------------------------------------------------------------------------------------------------*/
-function HomeCtrl($scope) {
-}
+function HomeCtrl() {}
 
 /*----------------------------------------------------------------------------------------------------*/
 function OverviewCtrl($scope, TrelloDataService) {
@@ -30,6 +29,11 @@ function OverviewCtrl($scope, TrelloDataService) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
 function CardTableCtrl($scope, $routeParams, CardTableService, TrelloDataService) {
+	if ( !$routeParams.boardId ) {
+		$scope.model = { ready: true };
+		return;
+	}
+
 	CardTableService.loadBoardData(TrelloDataService, $scope, $routeParams.boardId);
 	$scope.model = TrelloDataService.model();
 }
@@ -42,7 +46,7 @@ function CardTableCsvCtrl($scope, $routeParams, CardTableCsvService,
 	$scope.model = TrelloDataService.model();
 }
 
-/*----------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------* /
 function CardTableTestCtrl($scope, $http, CardTableService, TrelloDataService) {
 	$scope.model = { ready: true };
 	
