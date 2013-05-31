@@ -1,4 +1,15 @@
 
+.smallText {
+	font-size: 0.8em;
+}
+
+.smallLabel {
+	font-size: 0.7em;
+	text-transform: uppercase;
+	color: #888;
+	margin-bottom: 0;
+}
+
 ul, ol {
 	list-style-position: outside;
 	margin-left: 0;
@@ -6,11 +17,19 @@ ul, ol {
 }
 
 .swatch16 {
-	font-size: 10px;
 	width: 16px;
 	height: 16px;
 	margin-right: 2px;
 	background-color: black;
+	display: inline-block;
+}
+
+.tagBox {
+	font-size: 0.8em;
+	margin-right: 1px;
+	padding: 5px;
+	background-color: #eee;
+	border: solid 1px #ddd;
 	display: inline-block;
 }
 

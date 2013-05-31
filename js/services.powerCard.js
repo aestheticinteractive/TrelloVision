@@ -19,6 +19,14 @@ TrelloVisionApp.factory('PowerCardService', function() {
 		
 		scope.model = TrelloDataService.model();
 		scope.model.ready = false;
+
+		scope.getDueShort = function(d) {
+			return (d == null ? null : moment(d).format('MMM D [at] h:mm a'));
+		};
+
+		scope.getDueFull = function(d) {
+			return (d == null ? null : moment(d).format('dddd, MMM D, YYYY [at] h:mma'));
+		};
 	};
 	
 	return svc;

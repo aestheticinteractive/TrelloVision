@@ -92,7 +92,7 @@
 			<tbody>
 				<tr ng-repeat="card in model.table.cards | filter:search | orderBy:sortProp:sortRev">
 					<td>
-						<a href="{{card.url}}">
+						<a href="#/powercard/{{card.id}}">
 							{{card.shortId}}
 						</a>
 					</td>
