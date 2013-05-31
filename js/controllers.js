@@ -2,13 +2,17 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-function LayoutCtrl($scope, $location) {
+function LayoutCtrl($scope, $location, $window) {
 	for ( i in TrelloVisionModules ) {
 		var mod = TrelloVisionModules[i];
 		mod.selected = (mod.uri == $location.path() ? 'selected' : '');
 	}
 	
 	$scope.model = { modules: TrelloVisionModules, ready: true };
+
+	$scope.$on('$viewContentLoaded', function(event) {
+		$window.ga('send', 'pageview', $location.path()); //is $window necessary?
+	});
 }
 
 /*----------------------------------------------------------------------------------------------------*/
