@@ -76,6 +76,14 @@ TrelloVisionApp.factory('CardTableService', function() {
 			scope.sortProp = sortProp;
 			scope.sortRev = false;
 		};
+		
+		scope.descToHtml = function(desc, tagClass) {
+			if ( desc == null ) {
+				return null; 
+			}
+			
+			return descToHtml(desc, scope.model.table.board.id, tagClass);
+		}
 	};
 	
 	return svc;

@@ -8,8 +8,8 @@
 		<h3>
 			{{model.table.board.name}}
 		</h3>
-		<p ng-show="model.table.board.desc.length > 0">
-			{{model.table.board.desc}}<br/>
+		<p ng-show="model.table.board.desc.length > 0" style="margin-top: 10px;"
+			ng-bind-html-unsafe="descToHtml(model.table.board.desc, 'trelloTag')">
 		</p>
 		<p>
 			<a href="#/cardtable/board/{{model.table.board.id}}/csv" target="_self">
