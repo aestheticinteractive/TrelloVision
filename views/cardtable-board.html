@@ -92,17 +92,15 @@
 			<tbody>
 				<tr ng-repeat="card in model.table.cards | filter:search | orderBy:sortProp:sortRev">
 					<td>
+						{{card.shortId}}
+					</td>
+					<td>
+						{{card.listName}}
+					</td>
+					<td>
 						<a href="#/powercard/{{card.id}}">
-							{{card.shortId}}
+							{{card.name}}
 						</a>
-					</td>
-					<td>
-						<a href="#/cardtable/list/{{card.listId}}" target="_self">
-							{{card.listName}}
-						</a>
-					</td>
-					<td>
-						{{card.name}}
 					</td>
 					<td>
 						{{card.updated}}

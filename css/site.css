@@ -26,8 +26,8 @@ ul, ol {
 
 .tagBox {
 	font-size: 0.8em;
-	margin-right: 1px;
-	padding: 5px;
+	margin: 0 3px 3px 0;
+	padding: 3px 6px 5px 6px;
 	background-color: #eee;
 	border: solid 1px #ddd;
 	display: inline-block;

@@ -14,31 +14,51 @@
 			{{model.data.name}}
 		</h3>
 		
-		<div style="margin-bottom: 12px;">
+		<div>
 			<span ng-show="model.data.badges.comments" class="tagBox">
 				{{model.data.badges.comments}} comments
-			</span>
-
-			<span ng-show="model.data.badges.subscribed" class="tagBox">
+			</span><!--
+    		
+    		--><span ng-show="model.data.badges.subscribed" class="tagBox">
 				Subscribed
-			</span>
-
-			<span ng-show="model.data.badges.due != null" class="tagBox" 
+			</span><!--
+    		
+    		--><span ng-show="model.data.badges.due != null" class="tagBox" 
 			      title="Due: {{getDueFull(model.data.badges.due)}}">
 				Due: {{getDueShort(model.data.badges.due)}}<br/>
-			</span>
-			
-			<span ng-show="model.data.badges.votes" class="tagBox">
+			</span><!--
+    		
+    		--><span ng-show="model.data.badges.votes" class="tagBox">
 				{{model.data.badges.comments}} votes
 
 				<span ng-show="model.data.badges.viewingMemberVoted">
 					(You voted)
 				</span>
+			</span><!--
+    		
+    		--><a ng-repeat="mem in model.data.members" class="tagBox"
+    				href="http://trello.com/{{mem.username}}" target="_blank"
+    				title="{{mem.fullName}} ({{mem.username}})">
+				<strong>
+					{{mem.initials}}
+				</strong>
+			</a>
+		</div>
+		
+		<div ng-show="model.data.labels.length > 0">
+			<span ng-repeat="lbl in model.data.labels" class="tagBox"
+					style="color:{{getLabelTextColor(lbl.color)}}; font-weight: bold;
+					background-color:{{lbl.color}}; border:1px solid #555;">
+				{{lbl.name}}
 			</span>
 		</div>
 
-		<p ng-show="model.data.desc.length > 0">
-			{{model.data.desc}}<br/>
+		<p ng-show="model.data.desc.length > 0" style="margin-top: 10px;">
+			{{model.data.desc}}
+		</p>
+		
+		<p>
+			<a href="{{model.data.url}}">View this card on Trello ></a>
 		</p>
 	</div>
 
@@ -46,63 +66,47 @@
 </div>
 
 
-<div class="row" ng-show="model.ready">
+<div class="row" ng-show="model.ready && model.data.checklists.length > 0">
 	
-	<div class="large-2 small-3 columns">
-		<p>
-			<strong>Labels</strong>
-		</p>
+	<div class="columns">
+		<div ng-repeat="check in model.data.checklists">
+			<h5 style="display:inline-block;">
+				{{check.name}}
+			</h5>
+			
+			<p style="display:inline-block; margin-bottom:5px;">
+				({{getChecklistProg(check,0)}}, {{getChecklistProg(check,1)}}%)
+			</p>
+			
+			<div style="background-color:#aaa; width:100%; height:5px; margin-bottom:10px;">
+				<div style="background-color:#555; width:{{getChecklistProg(check,1)}}%; height:100%;">
+				</div>
+			</div>
+			
+			<table style="width: 100%;">
+				<tr ng-repeat="item in check.checkItems">
+					<td style="width: 1%;">
+						<span ng-show="item.state == 'complete'" class="ui-icon ui-icon-check"></span>
+					</td>
+					<td>
+						{{item.name}}
+					</td>
+				</tr>
+			</table>
+		</div>
 	</div>
-
-	<div class="large-10 small-9 columns">
-		<span ng-repeat="lbl in model.data.labels" class="swatch16"
-			style="background-color:{{lbl.color}};" title="{{lbl.name}}"></span>
-	</div>
-
+	
+	<hr/>
 </div>
 
 
 <div class="row" ng-show="model.ready">
 	
-	<div class="large-3 columns">
+	<div class="columns">
 		<h5>
-			Labels
+			Activity
 		</h5>
-		<div ng-repeat="lbl in model.data.labels">
-			<span class="swatch16" style="background-color: {{lbl.color}};"></span>
-			<span style="font-size: 0.8em;">{{lbl.name}}</span>
-		</div>
-	</div>
-
-	<div class="large-3 columns">
-		<h5>
-			Tags
-		</h5>
-		<p>
-			<em>None yet...</em>
-		</p>
-	</div>
-
-	<div class="large-3 columns">
-		<h5>
-			Members
-		</h5>
-		<p>
-			<span ng-repeat="mem in model.data.members">
-				<a href="http://trello.com/{{mem.username}}"></a>{{mem.fullName}}<br/>
-			</span>
-		</p>
 	</div>
 	
-	<div class="large-3 columns">
-		<h5>
-			Tags
-		</h5>
-		<p>
-			<em>None yet...</em>
-		</p>
-	</div>
-	
-	<hr/>
 </div>
 
