@@ -1,4 +1,5 @@
 
+var TrelloVisionVersion = "0.2.0.cc3bf7a";
 var HashTagPattern = /([\s">\[\{}])(#)([a-zA-Z][\w\-]*)/g;
 
 
