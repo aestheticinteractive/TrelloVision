@@ -52,9 +52,16 @@
 				{{lbl.name}}
 			</span>
 		</div>
+		
+		<div ng-show="model.hashtags.length > 0">
+			<a ng-repeat="tag in model.hashtags" class="tagBox"
+					href="#/cardtable/board/{{model.data.board.id}}?ft={{tag}}">
+				#{{tag}}
+			</a>
+		</div>
 
-		<p ng-show="model.data.desc.length > 0" style="margin-top: 10px;">
-			{{model.data.desc}}
+		<p ng-show="model.data.desc.length > 0" style="margin-top: 10px;"
+			ng-bind-html-unsafe="descToHtml(model.data.desc, 'span', 'trelloTag', 'trelloHash')">
 		</p>
 		
 		<p>

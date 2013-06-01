@@ -33,6 +33,17 @@ ul, ol {
 	display: inline-block;
 }
 
+.trelloTag {
+	margin: 0;
+	padding: 0 5px 0 5px;
+	border: solid 1px #ddd;
+	display: inline-block;
+}
+
+.trelloHash {
+	color:#bbb;
+}
+
 table thead tr th  {
     padding: 0.6em 0.4em;
 }

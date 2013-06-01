@@ -15,7 +15,18 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			list: 'true'
 		};
 		
-		TrelloDataService.loadData(scope, 'cards/'+cardId, params);
+		TrelloDataService.loadData(scope, 'cards/'+cardId, params, function() {
+			var text = scope.model.data.desc;
+			var pat = scope.hashtagPattern;
+			var tags = [];
+			var match;
+			
+			while ( (match = pat.exec(text)) ) {
+				tags.push(match[1]);
+			}
+			
+			scope.model.hashtags = tags;
+		});
 		
 		scope.model = TrelloDataService.model();
 		scope.model.ready = false;
@@ -49,6 +60,22 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			}
 			
 			return Math.round(comp/count*100);
+		}
+		
+		scope.hashtagPattern = /(?: #)([a-zA-Z][\w\-]*)/g;
+		
+		scope.descToHtml = function(desc, wrap, wrapClass, hashSpanClass) {
+			if ( desc == null ) {
+				return null; 
+			}
+			
+			return desc
+				.replace(scope.hashtagPattern, 
+					' <'+wrap+' class="'+wrapClass+'">'+
+						'<span class="'+hashSpanClass+'">#</span>'+
+					'$1</'+wrap+'>'
+				)
+				.replace(/\n/g, '<br/>');
 		}
 	};
 	
