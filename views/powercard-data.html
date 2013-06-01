@@ -7,8 +7,12 @@
 	
 	<div class="columns">
 		<p class="smallText" style="margin-bottom: 0;">
-			<a href="#/cardtable/board/{{model.data.board.id}}">{{model.data.board.name}}</a> > 
+			<a href="#/cardtable/board/{{model.data.board.id}}">
+				{{model.data.board.name}}
+			</a> > 
+			<a href="#/cardtable/board/{{model.data.board.id}}?fl={{model.listFilter}}">
 				{{model.data.list.name}}
+			</a>
 		</p>
 		<h3>
 			{{model.data.name}}

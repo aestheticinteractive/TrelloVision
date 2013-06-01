@@ -38,7 +38,7 @@ function CardTableCtrl($scope, $routeParams, CardTableService, TrelloDataService
 		return;
 	}
 
-	CardTableService.loadBoardData(TrelloDataService, $scope, $routeParams.boardId);
+	CardTableService.loadBoardData(TrelloDataService, $scope, $routeParams);
 	$scope.model = TrelloDataService.model();
 }
 
@@ -46,7 +46,7 @@ function CardTableCtrl($scope, $routeParams, CardTableService, TrelloDataService
 function CardTableCsvCtrl($scope, $routeParams, CardTableCsvService, 
 																CardTableService, TrelloDataService) {
 	CardTableCsvService.loadBoardData(
-		TrelloDataService, CardTableService, $scope, $routeParams.boardId);
+		TrelloDataService, CardTableService, $scope, $routeParams);
 	$scope.model = TrelloDataService.model();
 }
 

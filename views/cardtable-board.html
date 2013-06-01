@@ -45,14 +45,18 @@
 	</div>
 	
 	<div class="large-2 columns">
-		<input type="text" placeholder="List Name" ng-model="search.listName">
+		<input type="text" placeholder="List Name" ng-model="search.list">
 	</div>
 	
 	<div class="large-2 columns">
 		<input type="text" placeholder="Card Name" ng-model="search.name">
 	</div>
 	
-	<div class="large-6 columns">
+	<div class="large-2 columns">
+		<input type="text" placeholder="Tag Name" ng-model="search.tag">
+	</div>
+	
+	<div class="large-4 columns">
 	</div>
 	
 	<hr/>
@@ -66,7 +70,7 @@
 			Cards for the "{{model.table.board.name}}" Board
 		</h5>
 
-		<table style="font-size: 0.8em;" class="responsive">
+		<table style="font-size: 0.8em; width: 100%;" class="responsive">
 			<thead>
 				<tr>
 					<th title="Short ID"><a href="" ng-click="onSort('shortId');">#</a></th>
@@ -82,6 +86,7 @@
 					<th title="Member Count"><a href="" ng-click="onSort('-memberCount');">#M</a></th>
 					<th title="Comment Count"><a href="" ng-click="onSort('-commentCount');">#C</a></th>
 					<th title="Vote Count"><a href="" ng-click="onSort('-voteCount');">#V</a></th>
+					<th title="Tag Count"><a href="" ng-click="onSort('-tagCount');">#T</a></th>
 					<th title="Due Date"><a href="" ng-click="onSort('dueRaw');">Due</a></th>
 					<th title="Checklists">Chk</th>
 					<th ng-repeat="mem in model.table.members" title="{{mem.fullName}} ({{mem.username}})">
@@ -90,12 +95,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="card in model.table.cards | filter:search | orderBy:sortProp:sortRev">
+				<tr ng-repeat="card in model.table.cards | filter:onFilter(search) | orderBy:sortProp:sortRev">
 					<td>
 						{{card.shortId}}
 					</td>
 					<td>
-						{{card.listName}}
+						<a href="#/cardtable/board/{{model.table.board.id}}?fl={{card.listNameFilter}}">
+							{{card.listName}}
+						</a>
 					</td>
 					<td>
 						<a href="#/powercard/{{card.id}}">
@@ -118,6 +125,9 @@
 					</td>
 					<td>
 						{{card.voteCount}}
+					</td>
+					<td title="{{card.tags}}">
+						{{card.tagCount}}
 					</td>
 					<td>
 						{{card.due}}

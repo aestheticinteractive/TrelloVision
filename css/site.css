@@ -80,15 +80,15 @@ code {
 	margin: 0;
 	padding: 0 5px 0 5px;
 	background-color: #f8f8f8;
-	border: solid 1px #eee;
+	border: solid 1px #ddd;
 }
 
 pre {
 	font-size: 1.2em;
-	margin: 0;
-	padding: 0 5px 0 5px;
+	margin: 0 0 15px 0;
+	padding: 2px 7px;
 	background-color: #f8f8f8;
-	border: solid 1px #eee;
+	border: solid 1px #ddd;
 }
 
 pre code {

@@ -5,7 +5,7 @@
 TrelloVisionApp.factory('CardTableService', function() {
 	var svc = {};
 
-	svc.loadBoardData = function(TrelloDataService, scope, boardId, afterBuildCardTable) {
+	svc.loadBoardData = function(TrelloDataService, scope, routeParams, afterBuildCardTable) {
 		var params = { 
 			lists: 'open',
 			cards: 'visible',
@@ -14,7 +14,7 @@ TrelloVisionApp.factory('CardTableService', function() {
 			organization: 'true'
 		};
 		
-		TrelloDataService.loadData(scope, 'boards/'+boardId, params, function(scope) {
+		TrelloDataService.loadData(scope, 'boards/'+routeParams.boardId, params, function(scope) {
 			buildCardTable(scope);
 			if ( afterBuildCardTable ) { afterBuildCardTable(scope); }
 		});
@@ -23,10 +23,44 @@ TrelloVisionApp.factory('CardTableService', function() {
 		scope.model.ready = false;
 		scope.model.table = null;
 		scope.model.csv = null;
+		
+		scope.search = {};
+		
+		if ( routeParams.ft ) {
+			scope.search.tag = routeParams.ft;
+		}
 
+		if ( routeParams.fl ) {
+			scope.search.list = routeParams.fl;
+		}
+		
 		scope.sortProp = null;
 		scope.sortRev = false;
-
+		
+		scope.onFilter = function(search) {
+			return function(item) {
+				if ( search.name ) {
+					if ( !isTextMatch(item.name, search.name) ) {
+						return false;
+					} 
+				}
+				
+				if ( search.list ) {
+					if ( !isTextMatch(item.listName, search.list) ) {
+						return false;
+					}
+				}
+				
+				if ( search.tag ) {
+					if ( !isTextMatch(item.tags, search.tag) ) {
+						return false;
+					}
+				}
+				
+				return true;
+			}
+		}
+		
 		scope.onSort = function (sortProp) {
 			if ( scope.sortProp == sortProp ) {
 				if ( scope.sortRev ) {
@@ -99,6 +133,7 @@ function buildCardTable(scope) {
 		c.shortId = card.idShort;
 		c.listId = card.idList;
 		c.listName = table.listMap[card.idList].name;
+		c.listNameFilter = cleanFilterText(c.listName);
 		c.name = card.name;
 		c.desc = card.desc;
 		c.url = card.url;
@@ -110,6 +145,8 @@ function buildCardTable(scope) {
 		c.commentCount = card.badges.comments; 
 		c.voteCount = card.badges.votes;
 		c.checklists = [];
+		c.tags = '';
+		c.tagCount = 0;
 		
 		for ( li in card.labels ) {
 			var lbl = card.labels[li];
@@ -135,6 +172,13 @@ function buildCardTable(scope) {
 		for ( mi in card.idMembers ) {
 			var memId = card.idMembers[mi];
 			c['member'+memId] = true;
+		}
+		
+		var match;
+		
+		while ( (match = HashTagPattern.exec(c.desc)) ) {
+			c.tags += '#'+match[3]+' ';
+			c.tagCount++;
 		}
 	}
 }
