@@ -22,7 +22,7 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			var match;
 			
 			while ( (match = pat.exec(text)) ) {
-				tags.push(match[1]);
+				tags.push(match[3]);
 			}
 			
 			scope.model.hashtags = tags;
@@ -62,20 +62,25 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			return Math.round(comp/count*100);
 		}
 		
-		scope.hashtagPattern = /(?: #)([a-zA-Z][\w\-]*)/g;
+		scope.hashtagPattern = /([\s">\[\{}])(#)([a-zA-Z][\w\-]*)/g;
 		
-		scope.descToHtml = function(desc, wrap, wrapClass, hashSpanClass) {
+		scope.descToHtml = function(desc, tagClass) {
 			if ( desc == null ) {
 				return null; 
 			}
 			
-			return desc
-				.replace(scope.hashtagPattern, 
-					' <'+wrap+' class="'+wrapClass+'">'+
-						'<span class="'+hashSpanClass+'">#</span>'+
-					'$1</'+wrap+'>'
-				)
-				.replace(/\n/g, '<br/>');
+			var mc = new Markdown.Converter();
+    		var html = mc.makeHtml(desc);
+			
+			html = html.replace(scope.hashtagPattern, 
+				'$1<span class="'+tagClass+'">'+
+					'<a href="#/cardtable/board/'+scope.model.data.board.id+'?ft=$3">'+
+						'$2$3'+
+					'</a>'+
+				'</span>'
+			);
+			
+			return html;
 		}
 	};
 	

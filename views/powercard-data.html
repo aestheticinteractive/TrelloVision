@@ -61,7 +61,7 @@
 		</div>
 
 		<p ng-show="model.data.desc.length > 0" style="margin-top: 10px;"
-			ng-bind-html-unsafe="descToHtml(model.data.desc, 'span', 'trelloTag', 'trelloHash')">
+			ng-bind-html-unsafe="descToHtml(model.data.desc, 'trelloTag')">
 		</p>
 		
 		<p>
@@ -92,8 +92,9 @@
 			
 			<table style="width: 100%;">
 				<tr ng-repeat="item in check.checkItems">
-					<td style="width: 1%;">
+					<td style="width: 20px; text-align: center;">
 						<span ng-show="item.state == 'complete'" class="ui-icon ui-icon-check"></span>
+						<span ng-show="item.state != 'complete'" style='color:#888'>--</span>
 					</td>
 					<td>
 						{{item.name}}

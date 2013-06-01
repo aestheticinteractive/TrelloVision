@@ -33,16 +33,7 @@ ul, ol {
 	display: inline-block;
 }
 
-.trelloTag {
-	margin: 0;
-	padding: 0 5px 0 5px;
-	border: solid 1px #ddd;
-	display: inline-block;
-}
-
-.trelloHash {
-	color:#bbb;
-}
+.trelloTag {}
 
 table thead tr th  {
     padding: 0.6em 0.4em;
@@ -79,4 +70,30 @@ table tr td {
 	font-style: italic;
 	padding: 0;
 	margin: 0;
+}
+
+code {
+	font-family: Lucida Console, Consolas, Monaco, monospace;
+	font-weight: normal;
+	font-size: 0.9em;
+	color: #333;
+	margin: 0;
+	padding: 0 5px 0 5px;
+	background-color: #f8f8f8;
+	border: solid 1px #eee;
+}
+
+pre {
+	font-size: 1.2em;
+	margin: 0;
+	padding: 0 5px 0 5px;
+	background-color: #f8f8f8;
+	border: solid 1px #eee;
+}
+
+pre code {
+	font-size: 1.0em;
+	padding: 0;
+	background-color: inherit;
+	border: 0;
 }
