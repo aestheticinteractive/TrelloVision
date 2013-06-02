@@ -73,11 +73,11 @@
 		</p>
 	</div>
 
-	<hr/>
 </div>
 
 
 <div class="row" ng-show="model.ready && model.data.checklists.length > 0">
+	<hr/>
 	
 	<div class="columns">
 		<div ng-repeat="check in model.data.checklists">
@@ -108,17 +108,32 @@
 		</div>
 	</div>
 	
-	<hr/>
 </div>
 
 
-<div class="row" ng-show="model.ready">
+<div class="row" ng-show="model.ready && model.actions.length > 0">
+	<hr/>
 	
 	<div class="columns">
 		<h5>
-			Activity
+			Comments
 		</h5>
+		
+		<table style="width: 100%;">
+			<tr ng-repeat="action in model.actions">
+				<td style="vertical-align: top; font-size: 1.0em; width: 20%;">
+					<a href="{{action.memberCreator.username}}">
+						<strong>{{action.memberCreator.fullName}}</strong>
+					</a><br/>
+					<span style="color:#888; font-size:0.8em;">
+						{{getActionDate(action.date)}}
+					</span>
+				</td>
+				<td ng-bind-html-unsafe="descToHtml(action.data.text, 'trelloTag')"
+					style="vertical-align: top; font-size: 1.0em;">
+				</td>
+			</tr>
+		</table>
 	</div>
 	
 </div>
-

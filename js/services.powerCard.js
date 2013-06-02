@@ -6,28 +6,43 @@ TrelloVisionApp.factory('PowerCardService', function() {
 	var svc = {};
 
 	svc.loadCardData = function(TrelloDataService, scope, cardId) {
-		var params = {
-			actions_entities: 'true',
-			attachments: 'true',
-			members: 'true',
-			checklists: 'all',
-			board: 'true',
-			list: 'true'
-		};
+		var apiReqs = [
+			{
+				apiCommand: 'cards/'+cardId,
+				dataSets: {
+					actions_entities: 'true',
+					attachments: 'true',
+					members: 'true',
+					checklists: 'all',
+					board: 'true',
+					list: 'true'
+				},
+				propertyName: 'data'
+			},
+			{
+				apiCommand: 'cards/'+cardId+'/actions',
+				dataSets: {
+					entities: 'true',
+					filters: 'commentCard'
+				},
+				propertyName: 'actions'
+			}
+		];
 		
-		TrelloDataService.loadData(scope, 'cards/'+cardId, params, function() {
+		var onLoadData = function() {
 			var text = scope.model.data.desc;
-			var pat = HashTagPattern;
 			var tags = [];
 			var match;
 			
-			while ( (match = pat.exec(text)) ) {
+			while ( (match = HashTagPattern.exec(text)) ) {
 				tags.push(match[3]);
 			}
 			
 			scope.model.hashtags = tags;
 			scope.model.listFilter = cleanFilterText(scope.model.data.list.name);
-		});
+		};
+		
+		TrelloDataService.loadMultiData(scope, apiReqs, onLoadData);
 		
 		scope.model = TrelloDataService.model();
 		scope.model.ready = false;
@@ -70,6 +85,10 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			
 			return descToHtml(desc, scope.model.data.board.id, tagClass);
 		}
+		
+		scope.getActionDate = function(d) {
+			return (d == null ? null : moment(d).format('MMM D, YYYY - h:mm a'));
+		};
 	};
 	
 	return svc;

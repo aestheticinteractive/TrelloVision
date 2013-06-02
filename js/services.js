@@ -92,11 +92,7 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 		trelloAuth(onAuthSuccess, onAuthError);
 	};
 
-	/*svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
-		if ( !Trello.authorized() ) {
-			return;
-		}
-		
+	svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
 		model.count = apiRequests.length;
 
 		for ( i in apiRequests ) {
@@ -118,11 +114,11 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 
 			Trello.get(cmd, ds, makeOnSuccess(prop));
 		}
-	};*/
+	};
 
 	svc.model = function () {
 		return model;
 	};
-
+	
 	return svc;
 });
