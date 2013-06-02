@@ -79,7 +79,7 @@ TrelloVisionApp.factory('PowerCardService', function() {
 		}
 		
 		scope.descToHtml = function(desc, tagClass) {
-			if ( desc == null ) {
+			if ( desc == null || scope.model == null ) {
 				return null; 
 			}
 			
