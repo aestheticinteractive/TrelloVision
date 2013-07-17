@@ -53,7 +53,7 @@ function cleanFilterText(text) {
 function isTextMatch(text, search) {
 	var tokens = search.split(' ');
 
-	for ( ti in tokens ) {
+	for ( var ti in tokens ) {
 		var token = tokens[ti];
 
 		if ( text.toLowerCase().indexOf(token.toLowerCase()) == -1 ) {

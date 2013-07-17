@@ -128,13 +128,13 @@ function buildCardTable(scope) {
 
 	scope.model.table = table;
 
-	for ( li in board.lists ) {
+	for ( var li in board.lists ) {
 		var list = board.lists[li];
 		table.listIds.push(list.id);
 		table.listMap[list.id] = list;
 	}
 
-	for ( ci in board.cards ) {
+	for ( var ci in board.cards ) {
 		var card = board.cards[ci];
 		var c = {};
 		table.cards.push(c);
@@ -179,7 +179,7 @@ function buildCardTable(scope) {
 			});
 		}
 
-		for ( mi in card.idMembers ) {
+		for ( var mi in card.idMembers ) {
 			var memId = card.idMembers[mi];
 			c['member'+memId] = true;
 		}
@@ -203,14 +203,14 @@ function buildCardTableCsv(scope) {
 		'"Last Updated","Due Date","Green Label","Yellow Label","Orange Label","Red Label",'+
 		'"Purple Label","Blue Label","Member Count","Comment Count","Vote Count","Checklists"';
 
-	for ( mi in table.board.members ) {
+	for ( var mi in table.board.members ) {
 		var mem = table.board.members[mi];
 		csv += ',"'+mem.fullName+' ('+mem.id+')"';
 	}
 
 	csv += lineBreak;
 
-	for ( ci in table.cards ) {
+	for ( var ci in table.cards ) {
 		var card = table.cards[ci];
 
 		csv +=

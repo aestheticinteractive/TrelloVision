@@ -62,9 +62,9 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			var count = cl.checkItems.length;
 			var comp = 0;
 
-			for ( ci in cl.checkItems ) {
+			for ( var ci in cl.checkItems ) {
 				var item = cl.checkItems[ci];
-
+				
 				if ( item.state == "complete" ) {
 					++comp;
 				}
