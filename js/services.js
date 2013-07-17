@@ -58,53 +58,58 @@ function buildRoutes($routeProvider) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-TrelloVisionApp.factory('TrelloDataService', function() {
+TrelloVisionApp.factory('TrelloDataService', function () {
 	var svc = {};
-	
+
 	var model = {
 		ready: false,
 		data: null,
 		error: null
 	};
-	
-	svc.loadData = function(scope, apiCommand, dataSets, onDataSuccess) {
-		var onGetSuccess = function(data) {
+
+	svc.loadData = function (scope, apiCommand, dataSets, onDataSuccess) {
+		var onGetSuccess = function (data) {
 			model.data = data;
 			model.ready = true;
-			if ( onDataSuccess ) { onDataSuccess(scope); }
+			if (onDataSuccess) { onDataSuccess(scope); }
 			scope.$apply();
 		};
-		
-		var onGetError = function() {
-			model.error = "Trello data access failed.";
+
+		var onGetError = function (err) {
+			if ( isTrelloAuthRequired(err) ) {
+				trelloAuth(sendTrelloCmd, onAuthError);
+				return;
+			}
+
+			model.error = 'Trello data access failed: '+err.responseText;
 			scope.$apply();
 		};
-		
-		var onAuthSuccess = function() {
+
+		var sendTrelloCmd = function () {
 			Trello.get(apiCommand, dataSets, onGetSuccess, onGetError);
 		};
-		
-		var onAuthError = function() {
-			model.error = "Trello authorization failed.";
+
+		var onAuthError = function () {
+			model.error = 'Trello authorization failed.';
 			scope.$apply();
 		};
-		
-		trelloAuth(onAuthSuccess, onAuthError);
+
+		sendTrelloCmd();
 	};
 
-	svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
+	svc.loadMultiData = function (scope, apiRequests, onDataSuccess) {
 		model.count = apiRequests.length;
 
-		for ( i in apiRequests ) {
+		for (i in apiRequests) {
 			var cmd = apiRequests[i].apiCommand;
 			var ds = apiRequests[i].dataSets;
 			var prop = apiRequests[i].propertyName;
 
-			var makeOnSuccess = function(prop) {
-				return function(data) {
+			var makeOnSuccess = function (prop) {
+				return function (data) {
 					model[prop] = data;
 
-					if ( --model.count == 0 ) {
+					if (--model.count == 0) {
 						model.ready = true;
 						onDataSuccess(scope);
 						scope.$apply();
@@ -119,6 +124,6 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 	svc.model = function () {
 		return model;
 	};
-	
+
 	return svc;
 });
