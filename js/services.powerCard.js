@@ -77,7 +77,9 @@ TrelloVisionApp.factory('PowerCardService', function() {
 			return Math.round(comp/count*100);
 		};
 		scope.descToHtml = function(desc, tagClass) {
-			if ( desc == null || scope.model == null ) {
+			var m = scope.model;
+
+			if ( desc == null || m == null || m.data == null || typeof(m.data.board) === 'undefined' ) {
 				return null;
 			}
 
