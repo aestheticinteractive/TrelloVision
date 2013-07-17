@@ -28,22 +28,22 @@ TrelloVisionApp.factory('PowerCardService', function() {
 				propertyName: 'actions'
 			}
 		];
-		
+
 		var onLoadData = function() {
 			var text = scope.model.data.desc;
 			var tags = [];
 			var match;
-			
+
 			while ( (match = HashTagPattern.exec(text)) ) {
 				tags.push(match[3]);
 			}
-			
+
 			scope.model.hashtags = tags;
 			scope.model.listFilter = cleanFilterText(scope.model.data.list.name);
 		};
-		
+
 		TrelloDataService.loadMultiData(scope, apiReqs, onLoadData);
-		
+
 		scope.model = TrelloDataService.model();
 		scope.model.ready = false;
 
@@ -54,42 +54,39 @@ TrelloVisionApp.factory('PowerCardService', function() {
 		scope.getDueFull = function(d) {
 			return (d == null ? null : moment(d).format('dddd, MMM D, YYYY [at] h:mma'));
 		};
-		
+
 		scope.getLabelTextColor = function(c) {
 			return (c == "yellow" ? "#555" : "#fff");
-		}
-		
+		};
 		scope.getChecklistProg = function(cl, type) {
 			var count = cl.checkItems.length;
 			var comp = 0;
-			
-			for ( ci in cl.checkItems) {
+
+			for ( ci in cl.checkItems ) {
 				var item = cl.checkItems[ci];
-				
+
 				if ( item.state == "complete" ) {
 					++comp;
 				}
 			}
-			
+
 			if ( type == 0 ) {
 				return comp+'/'+count;
 			}
-			
+
 			return Math.round(comp/count*100);
-		}
-		
+		};
 		scope.descToHtml = function(desc, tagClass) {
 			if ( desc == null || scope.model == null ) {
-				return null; 
+				return null;
 			}
-			
+
 			return descToHtml(desc, scope.model.data.board.id, tagClass);
-		}
-		
+		};
 		scope.getActionDate = function(d) {
 			return (d == null ? null : moment(d).format('MMM D, YYYY - h:mm a'));
 		};
 	};
-	
+
 	return svc;
 });

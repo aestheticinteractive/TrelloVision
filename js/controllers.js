@@ -7,7 +7,7 @@ function LayoutCtrl($scope, $location, $window) {
 		var mod = TrelloVisionModules[i];
 		mod.selected = (mod.uri == $location.path() ? 'selected' : '');
 	}
-	
+
 	$scope.model = {
 		modules: TrelloVisionModules,
 		version: TrelloVisionVersion,
@@ -43,7 +43,7 @@ function CardTableCtrl($scope, $routeParams, CardTableService, TrelloDataService
 }
 
 /*----------------------------------------------------------------------------------------------------*/
-function CardTableCsvCtrl($scope, $routeParams, CardTableCsvService, 
+function CardTableCsvCtrl($scope, $routeParams, CardTableCsvService,
 																CardTableService, TrelloDataService) {
 	CardTableCsvService.loadBoardData(
 		TrelloDataService, CardTableService, $scope, $routeParams);

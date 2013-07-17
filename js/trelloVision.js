@@ -27,20 +27,20 @@ function isTrelloAuthRequired(err) {
 /*----------------------------------------------------------------------------------------------------*/
 function descToHtml(desc, boardId, tagClass) {
 	if ( desc == null ) {
-		return null; 
+		return null;
 	}
-	
+
 	var mc = new Markdown.Converter();
 	var html = mc.makeHtml(desc);
-	
-	html = html.replace(HashTagPattern, 
+
+	html = html.replace(HashTagPattern,
 		'$1<span class="'+tagClass+'">'+
 			'<a href="#/cardtable/board/'+boardId+'?ft=$3">'+
 				'$2$3'+
 			'</a>'+
 		'</span>'
 	);
-	
+
 	return html;
 }
 
@@ -52,14 +52,14 @@ function cleanFilterText(text) {
 /*----------------------------------------------------------------------------------------------------*/
 function isTextMatch(text, search) {
 	var tokens = search.split(' ');
-	
+
 	for ( ti in tokens ) {
 		var token = tokens[ti];
-		
+
 		if ( text.toLowerCase().indexOf(token.toLowerCase()) == -1 ) {
 			return false;
 		}
 	}
-	
+
 	return true;
 }

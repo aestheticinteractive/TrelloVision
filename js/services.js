@@ -15,19 +15,19 @@ var TrelloVisionModules = [
 function buildRoutes($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'views/home.html', 
+			templateUrl: 'views/home.html',
 			controller: HomeCtrl
 		})
 		.when('/overview', {
-			templateUrl: 'views/overview.html', 
+			templateUrl: 'views/overview.html',
 			controller: OverviewCtrl
 		})
 		.when('/cardtable', {
-			templateUrl: 'views/cardtable.html', 
+			templateUrl: 'views/cardtable.html',
 			controller: CardTableCtrl
 		})
 		.when('/cardtable/board', {
-			templateUrl: 'views/cardtable.html', 
+			templateUrl: 'views/cardtable.html',
 			controller: CardTableCtrl
 		})
 		/*.when('/cardtable/test', {
@@ -35,19 +35,19 @@ function buildRoutes($routeProvider) {
 			controller: CardTableTestCtrl
 		})*/
 		.when('/cardtable/board/:boardId/csv', {
-			templateUrl: 'views/cardtable-csv.html', 
+			templateUrl: 'views/cardtable-csv.html',
 			controller: CardTableCsvCtrl
 		})
 		.when('/cardtable/board/:boardId', {
-			templateUrl: 'views/cardtable-board.html', 
+			templateUrl: 'views/cardtable-board.html',
 			controller: CardTableCtrl
 		})
 		.when('/powercard', {
-			templateUrl: 'views/powercard.html', 
+			templateUrl: 'views/powercard.html',
 			controller: PowerCardCtrl
 		})
 		.when('/powercard/:cardId', {
-			templateUrl: 'views/powercard-data.html', 
+			templateUrl: 'views/powercard-data.html',
 			controller: PowerCardCtrl
 		})
 		.otherwise({
@@ -58,8 +58,8 @@ function buildRoutes($routeProvider) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*----------------------------------------------------------------------------------------------------*/
-TrelloVisionApp.factory('TrelloDataService', function () {
-	var svc = {};
+TrelloVisionApp.factory('TrelloDataService', function() {
+	var svc = { };
 
 	var model = {
 		ready: false,
@@ -67,15 +67,19 @@ TrelloVisionApp.factory('TrelloDataService', function () {
 		error: null
 	};
 
-	svc.loadData = function (scope, apiCommand, dataSets, onDataSuccess) {
-		var onGetSuccess = function (data) {
+	svc.loadData = function(scope, apiCommand, dataSets, onDataSuccess) {
+		var onGetSuccess = function(data) {
 			model.data = data;
 			model.ready = true;
-			if (onDataSuccess) { onDataSuccess(scope); }
+
+			if ( onDataSuccess ) {
+				onDataSuccess(scope);
+			}
+
 			scope.$apply();
 		};
 
-		var onGetError = function (err) {
+		var onGetError = function(err) {
 			if ( isTrelloAuthRequired(err) ) {
 				trelloAuth(sendTrelloCmd, onAuthError);
 				return;
@@ -85,11 +89,11 @@ TrelloVisionApp.factory('TrelloDataService', function () {
 			scope.$apply();
 		};
 
-		var sendTrelloCmd = function () {
+		var sendTrelloCmd = function() {
 			Trello.get(apiCommand, dataSets, onGetSuccess, onGetError);
 		};
 
-		var onAuthError = function () {
+		var onAuthError = function() {
 			model.error = 'Trello authorization failed.';
 			scope.$apply();
 		};
@@ -97,19 +101,19 @@ TrelloVisionApp.factory('TrelloDataService', function () {
 		sendTrelloCmd();
 	};
 
-	svc.loadMultiData = function (scope, apiRequests, onDataSuccess) {
+	svc.loadMultiData = function(scope, apiRequests, onDataSuccess) {
 		model.count = apiRequests.length;
 
-		for (i in apiRequests) {
+		for ( i in apiRequests ) {
 			var cmd = apiRequests[i].apiCommand;
 			var ds = apiRequests[i].dataSets;
-			var prop = apiRequests[i].propertyName;
+			var propName = apiRequests[i].propertyName;
 
-			var makeOnSuccess = function (prop) {
-				return function (data) {
+			var makeOnSuccess = function(prop) {
+				return function(data) {
 					model[prop] = data;
 
-					if (--model.count == 0) {
+					if ( --model.count == 0 ) {
 						model.ready = true;
 						onDataSuccess(scope);
 						scope.$apply();
@@ -117,11 +121,11 @@ TrelloVisionApp.factory('TrelloDataService', function () {
 				};
 			};
 
-			Trello.get(cmd, ds, makeOnSuccess(prop));
+			Trello.get(cmd, ds, makeOnSuccess(propName));
 		}
 	};
 
-	svc.model = function () {
+	svc.model = function() {
 		return model;
 	};
 
