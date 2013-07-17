@@ -23,7 +23,7 @@
 
 		<ul class="square">
 			<li ng-repeat="board in model.data.boards | filter:{idOrganization:'!'}">
-				{{board.name}}
+				<a href="#/cardtable/board/{{board.id}}" target="_self">{{board.name}}</a>
 			</li>
 		</ul>
 
