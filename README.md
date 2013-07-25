@@ -1,3 +1,11 @@
+> #### "Never build anything in-house if you can expose a basic API and get those high-value users [...] to build it for you."
+
+– [Joel Spolsky](http://www.joelonsoftware.com/items/2012/01/06.html), co-founder of the Fog Creek Software (creators of Trello).
+  
+> #### "Hmm... I really like Trello. And I really like to build things."
+
+– [Zach](http://github.com/zachkinstner), builder of things.
+
 ## TrelloVision
 
 The goal of TrelloVision is to create a series of views for your Trello data. Views like XML/CSV output, sortable table-based views, calendar-based views, searchable views, etc.
