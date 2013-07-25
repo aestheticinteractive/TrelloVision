@@ -79,8 +79,10 @@ TrelloVisionApp.factory('TrelloDataService', function() {
 			scope.$apply();
 		};
 
+		var failCount = 0;
+
 		var onGetError = function(err) {
-			if ( isTrelloAuthRequired(err) ) {
+			if ( ++failCount <= 3 && isTrelloAuthRequired(err) ) {
 				trelloAuth(sendTrelloCmd, onAuthError);
 				return;
 			}
