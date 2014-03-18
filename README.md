@@ -25,4 +25,4 @@ Please add your ideas for features and modules using the [TrelloVision developme
 If you like TrelloVision, please suggest it to your friends and colleagues!
 
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/10df1ab56833c70758542414f676c725 "githalytics.com")](http://githalytics.com/aestheticinteractive/TrelloVision)
+[![githalytics.com alpha](https://cruel-carlota.gopagoda.com/10df1ab56833c70758542414f676c725 "githalytics.com")](http://githalytics.com/aestheticinteractive/TrelloVision)
